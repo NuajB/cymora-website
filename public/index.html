@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CYMORA — Mantenimiento de Equipos de Cómputo</title>
+<link rel="icon" type="image/png" href="cymora_logo_circular.png">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #eef2ff;
+  --surface: #ffffff;
+  --surface-2: #f1f5f9;
+  --nav-bg: rgba(238,242,255,0.85);
+  --blue: #4f7ef8;
+  --blue-dark: #2952d9;
+  --blue-light: #a8c0fd;
+  --purple: #818cf8;
+  --green: #6ee7b7;
+  --yellow: #fde68a;
+  --pink: #f9a8d4;
+  --orange: #fdba74;
+  --text: #1e293b;
+  --text-mid: #475569;
+  --text-light: #94a3b8;
+  --border-soft: rgba(79,126,248,.1);
+  --border-soft-2: #e2e8f0;
+  --shadow: 6px 6px 0px rgba(79,126,248,0.2);
+  --shadow-hover: 9px 9px 0px rgba(79,126,248,0.28);
+  --footer-bg: #1e293b;
+  --footer-text: #e2e8f0;
+  --footer-text-mid: #94a3b8;
+  --footer-text-light: #64748b;
+  --footer-border: #334155;
+  --ink: #1e293b;
+  --badge-nueva-bg: #fef3c7;
+  --badge-nueva-text: #b45309;
+  --badge-contactado-bg: #dbeafe;
+  --badge-contactado-text: var(--blue-dark);
+  --badge-cerrada-bg: #dcfce7;
+  --badge-cerrada-text: #15803d;
+  --r: 22px;
+  --r-sm: 13px;
+  color-scheme: light;
+}
+html[data-theme="dark"] {
+  --bg: #0f172a;
+  --surface: #1e293b;
+  --surface-2: #273449;
+  --nav-bg: rgba(15,23,42,0.85);
+  --blue-light: #6b8fe0;
+  --text: #f1f5f9;
+  --text-mid: #cbd5e1;
+  --text-light: #94a3b8;
+  --border-soft: rgba(148,163,184,.18);
+  --border-soft-2: #334155;
+  --shadow: 6px 6px 0px rgba(0,0,0,0.35);
+  --shadow-hover: 9px 9px 0px rgba(0,0,0,0.45);
+  --footer-bg: #0a0f1c;
+  --footer-text: #e2e8f0;
+  --footer-text-mid: #94a3b8;
+  --footer-text-light: #64748b;
+  --footer-border: #1e293b;
+  --badge-nueva-bg: rgba(180,83,9,.22);
+  --badge-nueva-text: #fbbf7d;
+  --badge-contactado-bg: rgba(41,82,217,.28);
+  --badge-contactado-text: #bcd0ff;
+  --badge-cerrada-bg: rgba(21,128,61,.25);
+  --badge-cerrada-text: #86efac;
+  color-scheme: dark;
+}
+html[data-theme="dark"] .blob{opacity:.25}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+html,body{transition:background-color .25s ease,color .25s ease}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+.icon-emoji{font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji','Segoe UI Symbol',sans-serif;line-height:1;display:inline-flex;align-items:center;justify-content:center;font-style:normal}
+
+/* BLOBS */
+.blob-bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.15}
+.b1{width:700px;height:700px;background:var(--blue);top:-250px;left:-150px;animation:bm1 14s ease-in-out infinite}
+.b2{width:450px;height:450px;background:var(--purple);top:45%;right:-120px;animation:bm2 17s ease-in-out infinite}
+.b3{width:350px;height:350px;background:var(--green);bottom:5%;left:25%;animation:bm3 11s ease-in-out infinite}
+@keyframes bm1{0%,100%{transform:translate(0,0)}50%{transform:translate(40px,30px)}}
+@keyframes bm2{0%,100%{transform:translate(0,0)}50%{transform:translate(-30px,40px)}}
+@keyframes bm3{0%,100%{transform:translate(0,0)}50%{transform:translate(20px,-20px)}}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:16px 48px;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:2px solid var(--border-soft)}
+.logo{font-family:'Nunito',sans-serif;font-weight:900;font-size:26px;color:var(--blue-dark);letter-spacing:-1px;text-decoration:none;display:flex;align-items:center;gap:10px}
+.logo-img{width:40px;height:40px;border-radius:50%;object-fit:cover;flex-shrink:0;box-shadow:0 0 0 2px rgba(79,126,248,.25)}
+.logo span{color:var(--blue)}
+.nav-links{display:flex;gap:6px;align-items:center}
+.nav-links a{text-decoration:none;color:var(--text-mid);font-weight:600;font-size:14px;padding:8px 16px;border-radius:var(--r-sm);transition:all .2s}
+.nav-links a:hover{background:var(--surface);color:var(--blue);box-shadow:var(--shadow)}
+.nav-links a.active{background:var(--surface);color:var(--blue);box-shadow:var(--shadow)}
+.nav-emp{background:var(--ink)!important;color:white!important;box-shadow:4px 4px 0 rgba(0,0,0,.3)!important}
+.nav-emp:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 rgba(0,0,0,.3)!important}
+.nav-emp.active{background:var(--blue-dark)!important;color:white!important}
+.nav-cta{background:var(--blue)!important;color:white!important;box-shadow:4px 4px 0 var(--blue-dark)!important}
+.nav-cta:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--blue-dark)!important}
+
+/* SECTIONS */
+section{position:relative;z-index:1}
+
+/* PÁGINAS / PESTAÑAS */
+.page{display:none}
+.page.active{display:block}
+
+/* HERO */
+#inicio{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:120px 48px 80px;text-align:center}
+.hero-inner{max-width:800px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--surface);border:2px solid var(--blue-light);border-radius:100px;padding:8px 20px;font-size:13px;font-weight:700;color:var(--blue-dark);box-shadow:4px 4px 0 var(--blue-light);margin-bottom:28px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.4)}}
+.hero-title{font-family:'Nunito',sans-serif;font-size:clamp(40px,7vw,76px);font-weight:900;line-height:1.05;letter-spacing:-2px;margin-bottom:22px}
+.hero-title .acc{background:linear-gradient(135deg,var(--blue),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{font-size:18px;color:var(--text-mid);line-height:1.75;margin-bottom:44px;max-width:580px;margin-left:auto;margin-right:auto}
+.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn-p{display:inline-flex;align-items:center;gap:8px;background:var(--blue);color:white;font-weight:700;font-size:15px;padding:16px 32px;border-radius:var(--r-sm);text-decoration:none;box-shadow:5px 5px 0 var(--blue-dark);transition:all .2s;border:none;cursor:pointer;font-family:inherit}
+.btn-p:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--blue-dark)}
+.btn-s{display:inline-flex;align-items:center;gap:8px;background:var(--surface);color:var(--blue);font-weight:700;font-size:15px;padding:16px 32px;border-radius:var(--r-sm);text-decoration:none;box-shadow:5px 5px 0 var(--blue-light);border:2px solid var(--blue-light);transition:all .2s;cursor:pointer;font-family:inherit}
+.btn-s:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--blue-light)}
+.hero-stats{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:60px}
+.hstat{background:var(--surface);border-radius:var(--r);padding:22px 30px;box-shadow:var(--shadow);border:2px solid var(--border-soft);text-align:center;transition:all .2s}
+.hstat:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover)}
+.hstat .num{font-family:'Nunito',sans-serif;font-size:34px;font-weight:900;color:var(--blue)}
+.hstat .lbl{font-size:12px;color:var(--text-light);font-weight:600;margin-top:4px}
+
+/* SECTION HEADER */
+.sh{text-align:center;margin-bottom:60px}
+.eyebrow{display:inline-block;background:var(--blue);color:white;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:6px 16px;border-radius:100px;margin-bottom:14px}
+.sh h2{font-family:'Nunito',sans-serif;font-size:clamp(28px,4vw,46px);font-weight:900;letter-spacing:-1px;margin-bottom:14px}
+.sh p{font-size:16px;color:var(--text-mid);max-width:520px;margin:0 auto;line-height:1.75}
+
+/* PLANES INDIVIDUALES */
+#individuales{padding:100px 48px}
+.equipo-tabs{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:48px}
+.etab{padding:12px 24px;border-radius:100px;font-weight:700;font-size:14px;cursor:pointer;border:2px solid var(--blue-light);background:var(--surface);color:var(--blue);transition:all .2s;font-family:inherit;box-shadow:4px 4px 0 var(--blue-light)}
+.etab.active,.etab:hover{background:var(--blue);color:white;border-color:var(--blue-dark);box-shadow:4px 4px 0 var(--blue-dark)}
+.equipo-panel{display:none;max-width:1000px;margin:0 auto}
+.equipo-panel.active{display:block}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.svc-card{background:var(--surface);border-radius:var(--r);padding:32px 28px;box-shadow:var(--shadow);border:2px solid var(--border-soft);transition:all .25s;display:flex;flex-direction:column}
+.svc-card:hover{transform:translate(-4px,-4px);box-shadow:var(--shadow-hover)}
+.svc-icon{font-size:32px;margin-bottom:16px;font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif;line-height:1;display:inline-block}
+.svc-name{font-family:'Nunito',sans-serif;font-size:19px;font-weight:800;margin-bottom:8px}
+.svc-desc{font-size:13px;color:var(--text-mid);line-height:1.7;flex:1;margin-bottom:20px}
+.svc-price{font-family:'Nunito',sans-serif;font-size:28px;font-weight:900;color:var(--blue);margin-bottom:4px}
+.svc-note{font-size:11px;color:var(--text-light);margin-bottom:20px}
+.btn-wa{display:flex;align-items:center;justify-content:center;gap:8px;background:#25D366;color:white;font-weight:700;font-size:14px;padding:12px 20px;border-radius:var(--r-sm);text-decoration:none;box-shadow:4px 4px 0 #128C7E;transition:all .2s;border:none;cursor:pointer;font-family:inherit;width:100%}
+.btn-wa:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 #128C7E}
+.domicilio-note{text-align:center;margin-top:24px;background:var(--surface);border-radius:var(--r-sm);padding:14px 24px;font-size:13px;color:var(--text-mid);box-shadow:var(--shadow);border:2px solid var(--border-soft);max-width:500px;margin-left:auto;margin-right:auto}
+.domicilio-note strong{color:var(--blue)}
+
+/* EMPRESAS */
+#empresas{padding:100px 48px;background:rgba(255,255,255,.5)}
+.how-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:24px;max-width:900px;margin:0 auto 64px}
+.step-card{background:var(--surface);border-radius:var(--r);padding:32px 28px;box-shadow:var(--shadow);border:2px solid var(--border-soft);text-align:center;transition:all .2s}
+.step-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover)}
+.step-num{font-family:'Nunito',sans-serif;font-size:48px;font-weight:900;color:var(--blue-light);margin-bottom:12px}
+.step-title{font-family:'Nunito',sans-serif;font-size:18px;font-weight:800;margin-bottom:8px}
+.step-desc{font-size:13px;color:var(--text-mid);line-height:1.7}
+.emp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;max-width:1000px;margin:0 auto 48px}
+.emp-card{background:var(--surface);border-radius:var(--r);padding:36px 32px;box-shadow:var(--shadow);border:2px solid var(--border-soft);transition:all .25s}
+.emp-card:hover{transform:translate(-4px,-4px);box-shadow:var(--shadow-hover)}
+.emp-icon{font-size:40px;margin-bottom:16px;font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif;line-height:1;display:inline-block}
+.emp-name{font-family:'Nunito',sans-serif;font-size:22px;font-weight:900;margin-bottom:6px;color:var(--blue-dark)}
+.emp-sub{font-size:13px;color:var(--text-light);margin-bottom:20px}
+.emp-divider{height:2px;background:var(--border-soft);margin:16px 0}
+.price-list{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.price-list li{display:flex;justify-content:space-between;align-items:center;font-size:13px}
+.price-list li .range{color:var(--text-mid)}
+.price-list li .amount{font-weight:700;color:var(--blue);font-family:'Nunito',sans-serif;font-size:15px}
+.emp-cta{width:100%;padding:13px;border-radius:var(--r-sm);font-weight:700;font-size:14px;border:2px solid var(--blue);background:transparent;color:var(--blue);cursor:pointer;font-family:inherit;box-shadow:4px 4px 0 var(--blue-light);transition:all .2s}
+.emp-cta:hover{background:var(--blue);color:white;transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--blue-dark)}
+
+/* CÓMO FUNCIONA MANTENIMIENTO CORPORATIVO */
+.corp-how{max-width:1080px;margin:0 auto 64px;background:var(--surface);border-radius:var(--r);padding:48px;box-shadow:var(--shadow);border:2px solid var(--border-soft);display:grid;grid-template-columns:1fr 1.2fr;gap:44px;align-items:center}
+.corp-how-img{position:relative;overflow:hidden;background:var(--bg);border:2px dashed var(--blue-light);border-radius:var(--r);aspect-ratio:1/1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--text-light)}
+.corp-how-img .ci-icon-lg{font-size:64px;font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif;line-height:1}
+.corp-how-img span{font-size:13px;font-weight:700;color:var(--text-light)}
+.corp-how-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:calc(var(--r) - 2px)}
+.corp-how-img.has-img{border-style:solid}
+.corp-how-img.has-img .ci-icon-lg,.corp-how-img.has-img span{display:none}
+.corp-how-text h3{font-family:'Nunito',sans-serif;font-size:clamp(22px,3vw,30px);font-weight:900;letter-spacing:-1px;margin-bottom:16px;line-height:1.2}
+.corp-how-text h3 .acc{background:linear-gradient(135deg,var(--blue),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.corp-how-text p{font-size:14px;color:var(--text-mid);line-height:1.8;margin-bottom:16px}
+.corp-how-text p:last-child{margin-bottom:0}
+
+/* FORMULARIO EMPRESA */
+.emp-form-wrap{max-width:680px;margin:0 auto}
+#emp-form-page{padding:130px 48px 100px}
+.emp-form-card{background:var(--surface);border-radius:var(--r);padding:48px 40px;box-shadow:var(--shadow);border:2px solid var(--border-soft)}
+.emp-form-card h3{font-family:'Nunito',sans-serif;font-size:26px;font-weight:900;margin-bottom:6px}
+.emp-form-card .sub{font-size:14px;color:var(--text-mid);margin-bottom:32px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.fg{margin-bottom:18px}
+.fl{display:block;font-size:13px;font-weight:700;color:var(--text-mid);margin-bottom:7px}
+.fi{width:100%;padding:13px 16px;border:2px solid var(--border-soft);border-radius:var(--r-sm);font-size:14px;font-family:inherit;background:var(--bg);color:var(--text);transition:all .2s;outline:none}
+.fi:focus{border-color:var(--blue);background:var(--surface);box-shadow:0 0 0 4px var(--border-soft)}
+select.fi{cursor:pointer}
+.fta{width:100%;padding:13px 16px;border:2px solid var(--border-soft);border-radius:var(--r-sm);font-size:14px;font-family:inherit;background:var(--bg);color:var(--text);transition:all .2s;outline:none;resize:vertical;min-height:110px}
+.fta:focus{border-color:var(--blue);background:var(--surface);box-shadow:0 0 0 4px var(--border-soft)}
+.fsub{width:100%;padding:16px;background:var(--blue);color:white;border:none;border-radius:var(--r-sm);font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;box-shadow:5px 5px 0 var(--blue-dark);transition:all .2s}
+.fsub:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--blue-dark)}
+
+/* ÁREA EMPLEADOS */
+#empleados{padding:100px 48px}
+.emp-login-wrap{max-width:440px;margin:0 auto}
+.emp-login-card{background:var(--surface);border-radius:var(--r);padding:48px 40px;box-shadow:var(--shadow);border:2px solid var(--border-soft)}
+.emp-login-card h3{font-family:'Nunito',sans-serif;font-size:26px;font-weight:900;margin-bottom:6px}
+.emp-login-card .sub{font-size:14px;color:var(--text-mid);margin-bottom:28px}
+.badge-emp{display:inline-flex;align-items:center;gap:6px;background:var(--surface-2);border:2px solid var(--border-soft-2);border-radius:100px;padding:6px 14px;font-size:12px;font-weight:700;color:var(--text-mid);margin-bottom:20px}
+
+/* SOLICITUDES */
+.solicitudes-panel{display:none;max-width:960px;margin:0 auto}
+.solicitudes-panel.visible{display:block}
+.sol-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px}
+.sol-header h3{font-family:'Nunito',sans-serif;font-size:24px;font-weight:900}
+.sol-count{background:var(--blue);color:white;border-radius:100px;padding:4px 14px;font-size:13px;font-weight:700}
+.sol-grid{display:flex;flex-direction:column;gap:16px}
+.sol-card{background:var(--surface);border-radius:var(--r);padding:24px 28px;box-shadow:var(--shadow);border:2px solid var(--border-soft);display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center}
+.sol-empresa{font-family:'Nunito',sans-serif;font-size:18px;font-weight:800}
+.sol-info{font-size:13px;color:var(--text-mid);margin-top:4px}
+.sol-badges{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.sol-badge{background:var(--bg);border-radius:100px;padding:4px 12px;font-size:12px;font-weight:600;color:var(--blue)}
+.sol-actions{display:flex;flex-direction:column;gap:8px}
+.btn-contact-wa{display:flex;align-items:center;gap:6px;background:#25D366;color:white;font-weight:700;font-size:13px;padding:10px 18px;border-radius:var(--r-sm);text-decoration:none;box-shadow:3px 3px 0 #128C7E;transition:all .2s;border:none;cursor:pointer;font-family:inherit}
+.btn-contact-wa:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 #128C7E}
+.btn-contact-em{display:flex;align-items:center;gap:6px;background:var(--surface);color:var(--blue);font-weight:700;font-size:13px;padding:10px 18px;border-radius:var(--r-sm);text-decoration:none;box-shadow:3px 3px 0 var(--blue-light);border:2px solid var(--blue-light);transition:all .2s;cursor:pointer;font-family:inherit}
+.btn-contact-em:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--blue-light)}
+.sol-badge.st-nueva{background:var(--badge-nueva-bg);color:var(--badge-nueva-text)}
+.sol-badge.st-contactado{background:var(--badge-contactado-bg);color:var(--badge-contactado-text)}
+.sol-badge.st-cerrada{background:var(--badge-cerrada-bg);color:var(--badge-cerrada-text)}
+.btn-mark{display:flex;align-items:center;gap:6px;background:var(--ink);color:white;font-weight:700;font-size:12px;padding:9px 16px;border-radius:var(--r-sm);border:none;cursor:pointer;font-family:inherit;transition:all .2s}
+.btn-mark:hover{transform:translate(-2px,-2px)}
+.sol-info-loading{text-align:center;color:var(--text-light);font-size:14px;padding:24px 0}
+.logout-btn{background:transparent;border:2px solid var(--border-soft-2);color:var(--text-mid);font-weight:700;font-size:13px;padding:8px 18px;border-radius:var(--r-sm);cursor:pointer;font-family:inherit;transition:all .2s}
+.logout-btn:hover{border-color:var(--text);color:var(--text)}
+
+/* OPINIONES */
+#opiniones{padding:80px 48px 100px}
+.google-badge{display:inline-flex;align-items:center;gap:8px;background:var(--surface);border:2px solid var(--blue-light);border-radius:100px;padding:8px 20px;font-size:13px;font-weight:700;color:var(--text-mid);box-shadow:4px 4px 0 var(--blue-light);margin-bottom:18px}
+.google-badge .g-logo{font-family:'Nunito',sans-serif;font-weight:900;font-size:15px}
+.google-rating{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:8px}
+.google-rating .stars{color:#fbbf24;font-size:20px;letter-spacing:2px}
+.google-rating .rnum{font-family:'Nunito',sans-serif;font-weight:900;font-size:22px;color:var(--text)}
+.google-rating .rcount{font-size:13px;color:var(--text-light)}
+.reviews-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;max-width:1080px;margin:48px auto 0}
+.review-card{background:var(--surface);border-radius:var(--r);padding:26px 26px;box-shadow:var(--shadow);border:2px solid var(--border-soft);transition:all .25s;display:flex;flex-direction:column}
+.review-card:hover{transform:translate(-4px,-4px);box-shadow:var(--shadow-hover)}
+.review-head{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.review-avatar{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Nunito',sans-serif;font-weight:800;font-size:16px;color:white;flex-shrink:0}
+.review-name{font-weight:700;font-size:14px;color:var(--text)}
+.review-date{font-size:11px;color:var(--text-light);margin-top:2px}
+.review-stars{color:#fbbf24;font-size:14px;letter-spacing:1px;margin-bottom:10px}
+.review-text{font-size:13px;color:var(--text-mid);line-height:1.7;flex:1}
+
+/* CONTACTO */
+#contacto{padding:100px 48px}
+.contact-info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;max-width:820px;margin:0 auto}
+.ci{background:var(--surface);border-radius:var(--r);padding:22px 24px;box-shadow:var(--shadow);border:2px solid var(--border-soft);display:flex;align-items:center;gap:14px;transition:all .2s}
+.ci:hover{transform:translate(-4px,-4px);box-shadow:var(--shadow-hover)}
+.ci-icon{font-size:26px;width:44px;text-align:center;font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif;line-height:1}
+.ci-label{font-size:11px;font-weight:700;color:var(--text-light);text-transform:uppercase;letter-spacing:.08em}
+.ci-value{font-size:14px;font-weight:600;color:var(--text);margin-top:2px}
+
+/* FOOTER */
+footer{background:var(--footer-bg);color:var(--footer-text);padding:60px 48px 28px;position:relative;z-index:1}
+.ft{display:flex;justify-content:space-between;gap:48px;margin-bottom:48px;flex-wrap:wrap}
+.fb p{font-size:14px;color:var(--footer-text-mid);margin-top:12px;max-width:240px;line-height:1.7}
+.fl-col h4{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--footer-text-light);margin-bottom:14px}
+.fl-col ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.fl-col a{color:var(--footer-text-mid);text-decoration:none;font-size:14px;transition:color .2s}
+.fl-col a:hover{color:var(--footer-text)}
+.fb-bottom{border-top:1px solid var(--footer-border);padding-top:22px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px 24px}
+.fb-bottom p{font-size:13px;color:var(--footer-text-mid);line-height:1.6}
+@media(max-width:560px){.fb-bottom{flex-direction:column;align-items:flex-start;text-align:left}}
+
+/* UTILS */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.toast{position:fixed;bottom:28px;left:28px;z-index:999;background:var(--ink);color:white;padding:14px 22px;border-radius:var(--r-sm);font-size:14px;font-weight:600;box-shadow:6px 6px 0 var(--blue);transform:translateY(100px);opacity:0;transition:all .3s}
+
+/* ACCESIBILIDAD / PERSONALIZACIÓN */
+.a11y-fab-wrap{position:fixed;bottom:24px;right:24px;z-index:200;display:flex;flex-direction:column-reverse;align-items:center;gap:12px}
+.a11y-fab{width:56px;height:56px;border-radius:50%;background:var(--blue);color:white;border:none;font-size:24px;font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif;line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 6px 18px rgba(79,126,248,.5);transition:transform .2s;flex-shrink:0}
+.a11y-fab:hover{transform:scale(1.08)}
+.a11y-fab-img{width:28px;height:28px;object-fit:contain;pointer-events:none}
+.a11y-menu{display:flex;flex-direction:column;gap:10px;align-items:center;max-height:0;opacity:0;pointer-events:none;overflow:visible;transition:opacity .2s}
+.a11y-menu.open{max-height:400px;opacity:1;pointer-events:auto}
+.a11y-item{width:46px;height:46px;border-radius:50%;background:var(--surface);border:2px solid var(--blue-light);color:var(--blue-dark);font-size:18px;font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif;line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:var(--shadow);transition:all .2s;position:relative;flex-shrink:0}
+.a11y-item:hover{transform:scale(1.08)}
+.a11y-item.active{background:var(--blue);color:white;border-color:var(--blue-dark)}
+.a11y-tooltip{position:absolute;right:56px;top:50%;transform:translateY(-50%);background:var(--ink);color:white;font-size:11px;font-weight:600;padding:5px 10px;border-radius:8px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s}
+.a11y-item:hover .a11y-tooltip{opacity:1}
+.toast.show{transform:translateY(0);opacity:1}
+/* SOBRE NOSOTROS */
+#nosotros{padding:60px 48px 20px}
+.nosotros-box{max-width:760px;margin:0 auto;background:var(--surface);border-radius:var(--r);padding:36px 40px;box-shadow:var(--shadow);border:2px solid var(--border-soft);text-align:center}
+.nosotros-box p{font-size:15px;color:var(--text-mid);line-height:1.8}
+
+/* DETALLE DE SERVICIO */
+#servicio-detalle{padding:130px 48px 100px}
+.sd-back{display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:2px solid var(--blue-light);border-radius:100px;padding:9px 20px;font-size:13px;font-weight:700;color:var(--blue-dark);text-decoration:none;box-shadow:4px 4px 0 var(--blue-light);margin-bottom:36px;transition:all .2s;cursor:pointer;font-family:inherit}
+.sd-back:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--blue-light)}
+.sd-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:48px;max-width:1080px;margin:0 auto;align-items:start}
+.sd-img-box{position:relative;overflow:hidden;background:var(--surface);border:2px dashed var(--blue-light);border-radius:var(--r);aspect-ratio:1/1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;box-shadow:var(--shadow);color:var(--text-light)}
+.sd-img-box .sd-img-icon{font-size:64px;font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif;line-height:1}
+.sd-img-box span.sd-img-label{font-size:13px;font-weight:700;color:var(--text-light)}
+.sd-img-box img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:calc(var(--r) - 2px)}
+.sd-img-box.has-img{border-style:solid}
+.sd-img-box.has-img .sd-img-icon,.sd-img-box.has-img .sd-img-label{display:none}
+.sd-badge{display:inline-block;background:var(--blue);color:white;font-size:12px;font-weight:700;letter-spacing:.06em;padding:6px 16px;border-radius:100px;margin-bottom:16px}
+.sd-title{font-family:'Nunito',sans-serif;font-size:clamp(26px,3.6vw,38px);font-weight:900;letter-spacing:-1px;margin-bottom:16px;line-height:1.15}
+.sd-title .acc{background:linear-gradient(135deg,var(--blue),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sd-desc{font-size:15px;color:var(--text-mid);line-height:1.8;margin-bottom:24px}
+.sd-features{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:28px}
+.sd-features li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--text-mid);line-height:1.6}
+.sd-features li::before{content:'✓';flex-shrink:0;width:22px;height:22px;background:var(--green);color:var(--ink);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;margin-top:1px}
+.sd-price-box{background:var(--surface);border:2px solid var(--blue-light);border-radius:var(--r-sm);padding:20px 24px;box-shadow:var(--shadow);margin-bottom:24px;max-width:320px}
+.sd-price-lbl{font-size:12px;font-weight:700;color:var(--text-light);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.sd-price-val{font-family:'Nunito',sans-serif;font-size:32px;font-weight:900;color:var(--blue)}
+.sd-price-time{font-size:12px;color:var(--text-mid);margin-top:6px}
+.sd-price-note{font-size:11px;color:var(--text-light);margin-top:4px}
+.sd-cta{max-width:320px}
+
+@media(max-width:768px){nav{padding:14px 18px}.nav-links{display:none}#inicio,#nosotros,#individuales,#opiniones,#empresas,#empleados,#contacto,#servicio-detalle{padding-left:18px;padding-right:18px}.form-row,.sd-grid,.corp-how{grid-template-columns:1fr}footer{padding:40px 18px 24px}}
+</style>
+</head>
+<body>
+<div class="blob-bg"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#inicio" class="logo" onclick="showPage(event,'inicio')"><img src="cymora_logo.png" class="logo-img" alt="CYMORA">CYMORA</a>
+  <div class="nav-links">
+    <a href="#inicio" data-page="inicio" class="active" onclick="showPage(event,'inicio')">Inicio</a>
+    <a href="#individuales" onclick="showPage(event,'inicio','individuales')">Servicios</a>
+    <a href="#empresas" data-page="empresas" onclick="showPage(event,'empresas')">Empresas</a>
+    <a href="#contacto" onclick="showPage(event,'inicio','contacto')">Contacto</a>
+    <a href="#empleados" data-page="empleados" class="nav-emp" onclick="showPage(event,'empleados')">Área Empleados</a>
+  </div>
+</nav>
+
+<!-- PÁGINA: INICIO -->
+<div class="page active" id="page-inicio">
+
+<!-- HERO -->
+<section id="inicio">
+  <div class="hero-inner">
+    <div class="hero-badge"><span class="dot"></span> Servicio técnico profesional — Yumbo, Colombia</div>
+    <h1 class="hero-title">Tu equipo de cómputo<br><span class="acc">siempre en óptimas condiciones</span></h1>
+    <p class="hero-sub">Reparación y mantenimiento especializado para personas y empresas. Diagnóstico honesto, precios claros y resultados garantizados.</p>
+    <div class="hero-btns">
+      <a href="#individuales" class="btn-p" onclick="showPage(event,'inicio','individuales')">Ver servicios →</a>
+      <a href="#empresas" class="btn-s" onclick="showPage(event,'empresas')">Para empresas</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat reveal"><div class="num">+200</div><div class="lbl">Equipos atendidos</div></div>
+      <div class="hstat reveal"><div class="num">24h</div><div class="lbl">Tiempo de respuesta</div></div>
+      <div class="hstat reveal"><div class="num">98%</div><div class="lbl">Clientes satisfechos</div></div>
+      <div class="hstat reveal"><div class="num">3+</div><div class="lbl">Años de experiencia</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE NOSOTROS -->
+<section id="nosotros">
+  <div class="nosotros-box reveal">
+    <span class="eyebrow">Nuestra empresa</span>
+    <h2 style="font-family:'Nunito',sans-serif;font-weight:900;font-size:clamp(24px,3.4vw,34px);letter-spacing:-1px;margin:14px 0 16px">Servicio técnico con sede en Yumbo</h2>
+    <p>En CYMORA somos un equipo de técnicos especializados en mantenimiento de equipos de cómputo, ubicados en Yumbo, Valle del Cauca. Atendemos tanto a personas naturales como a empresas de toda la región, con diagnósticos honestos, precios claros y un servicio que cuida cada detalle de tu equipo, desde el primer contacto hasta la entrega final.</p>
+  </div>
+</section>
+
+<!-- PLANES INDIVIDUALES -->
+<section id="individuales">
+  <div class="sh reveal">
+    <span class="eyebrow">Personas naturales</span>
+    <h2>Elige tu equipo<br>y el servicio que necesitas</h2>
+    <p>Precios fijos sin letra pequeña. El domicilio varía según tu ubicación (desde $20.000 COP).</p>
+  </div>
+  <div class="equipo-tabs reveal">
+    <button class="etab active" onclick="switchEquipo('gamer',this)">🎮 PC / Laptop Gamer</button>
+    <button class="etab" onclick="switchEquipo('portatil',this)">💻 Portátil</button>
+    <button class="etab" onclick="switchEquipo('escritorio',this)">🖥️ PC Escritorio</button>
+  </div>
+
+  <!-- GAMER -->
+  <div class="equipo-panel active" id="panel-gamer">
+    <div class="services-grid">
+      <div class="svc-card reveal">
+        <div class="svc-icon">💿</div>
+        <div class="svc-name">Mantenimiento de Software</div>
+        <div class="svc-desc">Limpieza de virus, optimización del sistema, instalación de drivers y actualizaciones esenciales.</div>
+        <div class="svc-price">$60.000</div>
+        <div class="svc-note">+ domicilio desde $20.000</div>
+        <button class="btn-wa" onclick="openServicio('gamer-software')">💬 Ver detalles y solicitar →</button>
+      </div>
+      <div class="svc-card reveal">
+        <div class="svc-icon">🔧</div>
+        <div class="svc-name">Mantenimiento Físico</div>
+        <div class="svc-desc">Limpieza interna profunda, cambio de pasta térmica, revisión de componentes y ventilación.</div>
+        <div class="svc-price">$150.000</div>
+        <div class="svc-note">+ domicilio desde $20.000</div>
+        <button class="btn-wa" onclick="openServicio('gamer-fisico')">💬 Ver detalles y solicitar →</button>
+      </div>
+      <div class="svc-card reveal">
+        <div class="svc-icon">⚡</div>
+        <div class="svc-name">Mantenimiento Total</div>
+        <div class="svc-desc">Físico + Software completo. La mejor opción para dejar tu equipo como nuevo por completo.</div>
+        <div class="svc-price">$180.000</div>
+        <div class="svc-note">+ domicilio desde $20.000</div>
+        <button class="btn-wa" onclick="openServicio('gamer-total')">💬 Ver detalles y solicitar →</button>
+      </div>
+      <div class="svc-card reveal">
+        <div class="svc-icon">🕹️</div>
+        <div class="svc-name">Consolas</div>
+        <div class="svc-desc">Mantenimiento físico completo para consolas de videojuegos: PS4, PS5, Xbox, Nintendo Switch y más.</div>
+        <div class="svc-price">$150.000</div>
+        <div class="svc-note">+ domicilio desde $20.000</div>
+        <button class="btn-wa" onclick="openServicio('gamer-consolas')">💬 Ver detalles y solicitar →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PORTÁTIL -->
+  <div class="equipo-panel" id="panel-portatil">
+    <div class="services-grid">
+      <div class="svc-card reveal">
+        <div class="svc-icon">💿</div>
+        <div class="svc-name">Mantenimiento de Software</div>
+        <div class="svc-desc">Limpieza de virus, optimización del sistema, instalación de drivers y actualizaciones esenciales.</div>
+        <div class="svc-price">$60.000</div>
+        <div class="svc-note">+ domicilio desde $20.000</div>
+        <button class="btn-wa" onclick="openServicio('portatil-software')">💬 Ver detalles y solicitar →</button>
+      </div>
+      <div class="svc-card reveal">
+        <div class="svc-icon">🔧</div>
+        <div class="svc-name">Mantenimiento Físico</div>
+        <div class="svc-desc">Limpieza interna, cambio de pasta térmica, revisión de batería y sistema de refrigeración.</div>
+        <div class="svc-price">$100.000</div>
+        <div class="svc-note">+ domicilio desde $20.000</div>
+        <button class="btn-wa" onclick="openServicio('portatil-fisico')">💬 Ver detalles y solicitar →</button>
+      </div>
+      <div class="svc-card reveal">
+        <div class="svc-icon">⚡</div>
+        <div class="svc-name">Mantenimiento Total</div>
+        <div class="svc-desc">Físico + Software completo. La mejor opción para dejar tu portátil funcionando al máximo.</div>
+        <div class="svc-price">$130.000</div>
+        <div class="svc-note">+ domicilio desde $20.000</div>
+        <button class="btn-wa" onclick="openServicio('portatil-total')">💬 Ver detalles y solicitar →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ESCRITORIO -->
+  <div class="equipo-panel" id="panel-escritorio">
+    <div class="services-grid">
+      <div class="svc-card reveal">
+        <div class="svc-icon">💿</div>
+        <div class="svc-name">Mantenimiento de Software</div>
+        <div class="svc-desc">Limpieza de virus, optimización del sistema, instalación de drivers y actualizaciones esenciales.</div>
+        <div class="svc-price">$60.000</div>
+        <div class="svc-note">+ domicilio desde $20.000</div>
+        <button class="btn-wa" onclick="openServicio('escritorio-software')">💬 Ver detalles y solicitar →</button>
+      </div>
+      <div class="svc-card reveal">
+        <div class="svc-icon">🔧</div>
+        <div class="svc-name">Mantenimiento Físico</div>
+        <div class="svc-desc">Limpieza interna profunda, cambio de pasta térmica y revisión completa de componentes internos.</div>
+        <div class="svc-price">$70.000</div>
+        <div class="svc-note">+ domicilio desde $20.000</div>
+        <button class="btn-wa" onclick="openServicio('escritorio-fisico')">💬 Ver detalles y solicitar →</button>
+      </div>
+      <div class="svc-card reveal">
+        <div class="svc-icon">⚡</div>
+        <div class="svc-name">Mantenimiento Total</div>
+        <div class="svc-desc">Físico + Software completo. La solución más completa para tu PC de escritorio.</div>
+        <div class="svc-price">$100.000</div>
+        <div class="svc-note">+ domicilio desde $20.000</div>
+        <button class="btn-wa" onclick="openServicio('escritorio-total')">💬 Ver detalles y solicitar →</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="domicilio-note reveal">⚠️ El precio del <strong>domicilio varía según tu ubicación</strong> y se cotiza al momento de agendar el servicio.</div>
+</section>
+
+<!-- OPINIONES -->
+<section id="opiniones">
+  <div class="sh reveal">
+    <span class="google-badge">⭐ Reseñas de Google</span>
+    <h2>Lo que dicen<br>nuestros clientes</h2>
+    <div class="google-rating">
+      <span class="rnum">4.9</span>
+      <span class="stars">★★★★★</span>
+      <span class="rcount">basado en 47 opiniones de Google</span>
+    </div>
+    <p>Esto es un ejemplo de cómo se verían las opiniones reales una vez conectemos con Google. Por ahora se muestran reseñas de muestra.</p>
+  </div>
+  <div class="reviews-grid">
+    <div class="review-card reveal">
+      <div class="review-head">
+        <div class="review-avatar" style="background:var(--blue)">CR</div>
+        <div>
+          <div class="review-name">Carlos Ramírez</div>
+          <div class="review-date">Hace 2 semanas</div>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">Excelente servicio, llegaron a domicilio puntuales y me explicaron todo lo que le hicieron a mi PC. Quedó como nueva.</div>
+    </div>
+    <div class="review-card reveal">
+      <div class="review-head">
+        <div class="review-avatar" style="background:var(--purple)">AG</div>
+        <div>
+          <div class="review-name">Ana Gómez</div>
+          <div class="review-date">Hace 1 mes</div>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">Contratamos el mantenimiento corporativo para toda la clínica y el proceso fue muy organizado. Muy recomendados.</div>
+    </div>
+    <div class="review-card reveal">
+      <div class="review-head">
+        <div class="review-avatar" style="background:#f472b6">LH</div>
+        <div>
+          <div class="review-name">Luis Herrera</div>
+          <div class="review-date">Hace 1 mes</div>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">Le hicieron mantenimiento a mis equipos gamer del café internet, mejoró muchísimo la temperatura y el rendimiento.</div>
+    </div>
+    <div class="review-card reveal">
+      <div class="review-head">
+        <div class="review-avatar" style="background:#fb923c">MV</div>
+        <div>
+          <div class="review-name">Mariana Valencia</div>
+          <div class="review-date">Hace 2 meses</div>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">Precio justo y el técnico fue muy honesto, no me vendió nada que no necesitara. Mi laptop volvió a andar rápido.</div>
+    </div>
+    <div class="review-card reveal">
+      <div class="review-head">
+        <div class="review-avatar" style="background:var(--green);color:var(--text)">JP</div>
+        <div>
+          <div class="review-name">Juan Pablo Ríos</div>
+          <div class="review-date">Hace 3 meses</div>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">Muy buena atención por WhatsApp, agendaron el domicilio el mismo día y solucionaron el problema de mi PC de escritorio.</div>
+    </div>
+    <div class="review-card reveal">
+      <div class="review-head">
+        <div class="review-avatar" style="background:#38bdf8">SD</div>
+        <div>
+          <div class="review-name">Sara Delgado</div>
+          <div class="review-date">Hace 3 meses</div>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">Recomendados 100%. Repararon mi consola PS5 y quedó funcionando perfecto, mucho más silenciosa que antes.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="sh reveal">
+    <span class="eyebrow">Contacto</span>
+    <h2>¿Tienes algún problema<br>con tu equipo?</h2>
+    <p>Escríbenos directamente por WhatsApp o correo y te respondemos en menos de 24 horas.</p>
+  </div>
+  <div class="contact-info-grid">
+    <div class="ci reveal">
+      <div class="ci-icon">📍</div>
+      <div><div class="ci-label">Ubicación</div><div class="ci-value">Yumbo, Valle del Cauca, Colombia</div></div>
+    </div>
+    <div class="ci reveal">
+      <div class="ci-icon">📱</div>
+      <div><div class="ci-label">WhatsApp</div><a href="https://wa.me/573135745889" target="_blank" class="ci-value" style="text-decoration:none">+57 313 5745889</a></div>
+    </div>
+    <div class="ci reveal">
+      <div class="ci-icon">📧</div>
+      <div><div class="ci-label">Correo</div><a href="mailto:cymorasas@gmail.com" class="ci-value" style="text-decoration:none">cymorasas@gmail.com</a></div>
+    </div>
+    <div class="ci reveal">
+      <div class="ci-icon">🕐</div>
+      <div><div class="ci-label">Horario</div><div class="ci-value">Lun – Sáb, 8:00 am – 6:00 pm</div></div>
+    </div>
+  </div>
+</section>
+
+</div>
+<!-- FIN PÁGINA: INICIO -->
+
+<!-- PÁGINA: DETALLE DE SERVICIO -->
+<div class="page" id="page-servicio-detalle">
+<section id="servicio-detalle">
+  <button class="sd-back" onclick="showPage(event,'inicio','individuales')">← Volver a servicios</button>
+  <div class="sd-grid">
+    <div class="sd-img-box" id="sd-img-box">
+      <img id="sd-img" src="" alt="" onload="document.getElementById('sd-img-box').classList.add('has-img')" onerror="document.getElementById('sd-img-box').classList.remove('has-img');this.removeAttribute('src')">
+      <div class="sd-img-icon" id="sd-icon">💿</div>
+      <span class="sd-img-label">Espacio para imagen del servicio</span>
+    </div>
+    <div class="sd-info">
+      <span class="sd-badge" id="sd-badge">Personas naturales</span>
+      <h2 class="sd-title" id="sd-title">Mantenimiento <span class="acc">de Software</span></h2>
+      <p class="sd-desc" id="sd-desc">Descripción del servicio.</p>
+      <ul class="sd-features" id="sd-features"></ul>
+      <div class="sd-price-box">
+        <div class="sd-price-lbl">Precio</div>
+        <div class="sd-price-val" id="sd-price">$60.000</div>
+        <div class="sd-price-time" id="sd-time">Tiempo: 1 hora</div>
+        <div class="sd-price-note" id="sd-note">*Este valor no incluye el domicilio, desde $20.000</div>
+      </div>
+      <a href="#" id="sd-wa-btn" class="btn-wa sd-cta" target="_blank">💬 Solicitar por WhatsApp</a>
+    </div>
+  </div>
+</section>
+</div>
+<!-- FIN PÁGINA: DETALLE DE SERVICIO -->
+
+<!-- PÁGINA: EMPRESAS -->
+<div class="page" id="page-empresas">
+
+<!-- EMPRESAS -->
+<section id="empresas">
+  <div class="sh reveal">
+    <span class="eyebrow">Mantenimiento Corporativo</span>
+    <h2>Planes para empresas<br>y profesionales</h2>
+    <p>El precio por equipo disminuye según la cantidad. Solicita un diagnóstico sin costo y te enviamos la cotización.</p>
+  </div>
+
+  <!-- CÓMO FUNCIONA -->
+  <div class="how-steps">
+    <div class="step-card reveal">
+      <div class="step-num">01</div>
+      <div class="step-title">Define tus equipos</div>
+      <div class="step-desc">Indica el tipo y cantidad de equipos que deseas incluir en el plan de mantenimiento.</div>
+    </div>
+    <div class="step-card reveal">
+      <div class="step-num">02</div>
+      <div class="step-title">Solicita diagnóstico</div>
+      <div class="step-desc">Un asesor te presenta la cotización personalizada para el mantenimiento de todos tus equipos.</div>
+    </div>
+    <div class="step-card reveal">
+      <div class="step-num">03</div>
+      <div class="step-title">Activación del servicio</div>
+      <div class="step-desc">Nuestros técnicos realizan el mantenimiento en cada equipo de tu empresa.</div>
+    </div>
+  </div>
+
+  <!-- CARDS PRECIOS EMPRESA -->
+  <div class="emp-grid">
+    <div class="emp-card reveal">
+      <div class="emp-icon">🖥️</div>
+      <div class="emp-name">PC Escritorio</div>
+      <div class="emp-sub">Computadores con torre de escritorio</div>
+      <div class="emp-divider"></div>
+      <ul class="price-list">
+        <li><span class="range">Hasta 5 equipos</span><span class="amount">$100.000 c/u</span></li>
+        <li><span class="range">Hasta 10 equipos</span><span class="amount">$95.000 c/u</span></li>
+        <li><span class="range">Hasta 20 equipos</span><span class="amount">$90.000 c/u</span></li>
+        <li><span class="range">Más de 21 equipos</span><span class="amount">$80.000 c/u</span></li>
+      </ul>
+      <button class="emp-cta" onclick="scrollToEmpForm('PC Escritorio')">Solicitar diagnóstico →</button>
+    </div>
+    <div class="emp-card reveal">
+      <div class="emp-icon">💻</div>
+      <div class="emp-name">Portátiles</div>
+      <div class="emp-sub">Portátiles o equipos todo en uno</div>
+      <div class="emp-divider"></div>
+      <ul class="price-list">
+        <li><span class="range">Hasta 5 equipos</span><span class="amount">$130.000 c/u</span></li>
+        <li><span class="range">Hasta 10 equipos</span><span class="amount">$120.000 c/u</span></li>
+        <li><span class="range">Hasta 20 equipos</span><span class="amount">$110.000 c/u</span></li>
+        <li><span class="range">Más de 21 equipos</span><span class="amount">$100.000 c/u</span></li>
+      </ul>
+      <button class="emp-cta" onclick="scrollToEmpForm('Portátiles')">Solicitar diagnóstico →</button>
+    </div>
+    <div class="emp-card reveal">
+      <div class="emp-icon">🎮</div>
+      <div class="emp-name">Equipos Gamer</div>
+      <div class="emp-sub">Portátiles gamer o torres gamer</div>
+      <div class="emp-divider"></div>
+      <ul class="price-list">
+        <li><span class="range">Hasta 5 equipos</span><span class="amount">$180.000 c/u</span></li>
+        <li><span class="range">Hasta 10 equipos</span><span class="amount">$165.000 c/u</span></li>
+        <li><span class="range">Hasta 20 equipos</span><span class="amount">$150.000 c/u</span></li>
+        <li><span class="range">Más de 21 equipos</span><span class="amount">$130.000 c/u</span></li>
+      </ul>
+      <button class="emp-cta" onclick="scrollToEmpForm('Equipos Gamer')">Solicitar diagnóstico →</button>
+    </div>
+  </div>
+
+  <!-- CÓMO FUNCIONA UN MANTENIMIENTO CORPORATIVO -->
+  <div class="corp-how reveal">
+    <div class="corp-how-img" id="corp-how-img">
+      <img src="cymora_empresas.png" alt="Mantenimiento corporativo CYMORA" onload="document.getElementById('corp-how-img').classList.add('has-img')" onerror="this.style.display='none'">
+      <div class="ci-icon-lg">🖥️</div>
+      <span>Espacio para imagen</span>
+    </div>
+    <div class="corp-how-text">
+      <h3>¿Cómo funciona <span class="acc">un Mantenimiento Corporativo?</span></h3>
+      <p>Cada equipo recibirá un diagnóstico inicial de rendimiento, limpieza física completa, limpieza interna de torre con aire, limpieza de contactos, cambio de pasta térmica para el procesador, lubricación del sistema de refrigeración, limpieza de contactos a procesador y memoria RAM, y mantenimiento del sistema Windows.</p>
+      <p>Esto garantiza que cada computador, ya sea portátil, todo en uno o de escritorio, esté siempre en condiciones óptimas para operar de forma eficiente y segura.</p>
+      <p>Esta modalidad permite escalar el servicio según las necesidades específicas, contratando desde un equipo hasta cubrir toda una infraestructura tecnológica, con la misma calidad, consistencia y atención personalizada.</p>
+    </div>
+  </div>
+</section>
+
+</div>
+<!-- FIN PÁGINA: EMPRESAS -->
+
+<!-- PÁGINA: FORMULARIO DIAGNÓSTICO EMPRESARIAL -->
+<div class="page" id="page-emp-form">
+<section id="emp-form-page">
+  <button class="sd-back" onclick="showPage(event,'empresas')">← Volver a planes empresariales</button>
+  <!-- FORMULARIO EMPRESA -->
+  <div class="emp-form-wrap reveal" id="emp-form-section">
+    <div class="emp-form-card">
+      <h3>Solicitar diagnóstico empresarial</h3>
+      <p class="sub">Completa el formulario y te contactamos en menos de 24 horas.</p>
+      <div class="form-row">
+        <div class="fg"><label class="fl">Nombre de la empresa</label><input type="text" class="fi" id="emp-nombre" placeholder="Razón social o nombre comercial"></div>
+        <div class="fg"><label class="fl">Persona de contacto</label><input type="text" class="fi" id="emp-contacto" placeholder="Tu nombre completo"></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label class="fl">Correo electrónico</label><input type="email" class="fi" id="emp-email" placeholder="correo@empresa.com"></div>
+        <div class="fg"><label class="fl">WhatsApp / Celular</label><input type="tel" class="fi" id="emp-tel" placeholder="+57 313 5745889"></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label class="fl">Tipo de equipo</label>
+          <select class="fi" id="emp-tipo">
+            <option value="">Selecciona...</option>
+            <option>PC Escritorio</option>
+            <option>Portátiles</option>
+            <option>Equipos Gamer</option>
+            <option>Mixto (varios tipos)</option>
+          </select>
+        </div>
+        <div class="fg"><label class="fl">Cantidad de equipos</label><input type="number" class="fi" id="emp-cantidad" placeholder="Ej: 15" min="1"></div>
+      </div>
+      <div class="fg"><label class="fl">Información adicional</label><textarea class="fta" id="emp-info" placeholder="Describe brevemente el estado de los equipos o cualquier detalle relevante..."></textarea></div>
+      <button class="fsub" onclick="enviarSolicitud()">Enviar solicitud de diagnóstico →</button>
+    </div>
+  </div>
+</section>
+</div>
+<!-- FIN PÁGINA: FORMULARIO DIAGNÓSTICO EMPRESARIAL -->
+
+<!-- PÁGINA: EMPLEADOS -->
+<div class="page" id="page-empleados">
+
+<!-- ÁREA EMPLEADOS -->
+<section id="empleados">
+  <div class="sh">
+    <span class="eyebrow">Acceso restringido</span>
+    <h2>Área de Empleados<br>CYMORA</h2>
+  </div>
+
+  <!-- LOGIN EMPLEADOS -->
+  <div class="emp-login-wrap" id="emp-login-panel">
+    <div class="emp-login-card">
+      <div class="badge-emp">🔒 Solo para el equipo CYMORA</div>
+      <h3>Iniciar sesión</h3>
+      <p class="sub">Accede para revisar las solicitudes de empresas.</p>
+      <div class="fg"><label class="fl">Usuario</label><input type="text" class="fi" id="emp-user" placeholder="Usuario"></div>
+      <div class="fg" style="margin-top:14px"><label class="fl">Contraseña</label><input type="password" class="fi" id="emp-pass" placeholder="••••••••"></div>
+      <button class="fsub" style="margin-top:20px" onclick="loginEmpleado()">Entrar →</button>
+    </div>
+  </div>
+
+  <!-- PANEL SOLICITUDES -->
+  <div class="solicitudes-panel" id="solicitudes-panel">
+    <div class="sol-header">
+      <div>
+        <h3>Solicitudes empresariales</h3>
+        <p style="font-size:13px;color:var(--text-light);margin-top:4px">Contacta a cada empresa por WhatsApp o Email</p>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center">
+        <span class="sol-count" id="sol-count">3 solicitudes</span>
+        <button class="logout-btn" onclick="logoutEmpleado()">Cerrar sesión</button>
+      </div>
+    </div>
+    <div class="sol-grid" id="sol-grid">
+      <p id="sol-empty" style="text-align:center;color:var(--text-light);font-size:14px;padding:24px 0">Cargando solicitudes...</p>
+    </div>
+  </div>
+</section>
+
+</div>
+<!-- FIN PÁGINA: EMPLEADOS -->
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft">
+    <div class="fb">
+      <a href="#inicio" class="logo" style="color:white" onclick="showPage(event,'inicio')"><img src="cymora_logo.png" class="logo-img" alt="CYMORA logo">CYMORA</a>
+      <p>Servicio técnico profesional para equipos de cómputo. Calidad, rapidez y honestidad en cada servicio.</p>
+    </div>
+    <div class="fl-col"><h4>Servicios</h4><ul><li><a href="#individuales" onclick="showPage(event,'inicio','individuales')">PC / Laptop Gamer</a></li><li><a href="#individuales" onclick="showPage(event,'inicio','individuales')">Portátiles</a></li><li><a href="#individuales" onclick="showPage(event,'inicio','individuales')">PC Escritorio</a></li><li><a href="#empresas" onclick="showPage(event,'empresas')">Planes Empresariales</a></li></ul></div>
+    <div class="fl-col"><h4>Empresa</h4><ul><li><a href="#inicio" onclick="showPage(event,'inicio')">Inicio</a></li><li><a href="#opiniones" onclick="showPage(event,'inicio','opiniones')">Opiniones</a></li><li><a href="#empresas" onclick="showPage(event,'empresas')">Corporativo</a></li><li><a href="#contacto" onclick="showPage(event,'inicio','contacto')">Contacto</a></li></ul></div>
+    <div class="fl-col"><h4>Legal</h4><ul><li><a href="#">Términos de servicio</a></li><li><a href="#">Política de privacidad</a></li><li><a href="#">Garantías</a></li></ul></div>
+  </div>
+  <div class="fb-bottom">
+    <p>© 2026 CYMORA. Proyecto SENA — Todos los derechos reservados.</p>
+    <p>Hecho en Yumbo, Colombia</p>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<!-- FILTROS SVG PARA MODOS DE DALTONISMO -->
+<svg style="position:absolute;width:0;height:0" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="filter-protanopia" color-interpolation-filters="sRGB">
+      <feColorMatrix type="matrix" values="0.567 0.433 0 0 0  0.558 0.442 0 0 0  0 0.242 0.758 0 0  0 0 0 1 0"/>
+    </filter>
+    <filter id="filter-deuteranopia" color-interpolation-filters="sRGB">
+      <feColorMatrix type="matrix" values="0.625 0.375 0 0 0  0.7 0.3 0 0 0  0 0.3 0.7 0 0  0 0 0 1 0"/>
+    </filter>
+    <filter id="filter-tritanopia" color-interpolation-filters="sRGB">
+      <feColorMatrix type="matrix" values="0.95 0.05 0 0 0  0 0.433 0.567 0 0  0 0.475 0.525 0 0  0 0 0 1 0"/>
+    </filter>
+  </defs>
+</svg>
+
+<!-- BOTÓN DE ACCESIBILIDAD / PERSONALIZACIÓN -->
+<div class="a11y-fab-wrap">
+  <button class="a11y-fab" id="a11y-toggle" onclick="toggleA11yMenu()" aria-label="Opciones de accesibilidad" title="Accesibilidad"><img src="accesibilidad_logo.png" class="a11y-fab-img" alt=""></button>
+  <div class="a11y-menu" id="a11y-menu">
+    <button class="a11y-item" id="a11y-dark" onclick="toggleDarkMode()" aria-label="Modo oscuro">
+      <span id="a11y-dark-icon">🌙</span>
+      <span class="a11y-tooltip">Modo oscuro</span>
+    </button>
+    <button class="a11y-item" data-mode="tritanopia" onclick="setColorMode('tritanopia')" aria-label="Modo tritanopia">
+      🔵<span class="a11y-tooltip">Daltonismo: Tritanopia</span>
+    </button>
+    <button class="a11y-item" data-mode="deuteranopia" onclick="setColorMode('deuteranopia')" aria-label="Modo deuteranopia">
+      🟢<span class="a11y-tooltip">Daltonismo: Deuteranopia</span>
+    </button>
+    <button class="a11y-item" data-mode="protanopia" onclick="setColorMode('protanopia')" aria-label="Modo protanopia">
+      🔴<span class="a11y-tooltip">Daltonismo: Protanopia</span>
+    </button>
+    <button class="a11y-item" data-mode="normal" onclick="setColorMode('normal')" aria-label="Visión normal">
+      👁️<span class="a11y-tooltip">Visión normal</span>
+    </button>
+  </div>
+</div>
+
+<script>
+// Scroll reveal
+const obs = new IntersectionObserver(entries => {
+  entries.forEach((e,i) => {
+    if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('visible'),i*70); obs.unobserve(e.target); }
+  });
+},{threshold:0.08});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+
+// Equipo tabs
+function switchEquipo(id, btn) {
+  document.querySelectorAll('.equipo-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.etab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ===== DATOS DE SERVICIOS (para la pestaña de detalle) =====
+const SERVICIOS = {
+  'gamer-software': {
+    equipo: 'PC / Laptop Gamer', icono: '💿', imagen: 'img-gamer-software.png',
+    titulo: 'Mantenimiento <span class="acc">de Software</span>',
+    desc: 'Mejoramos el rendimiento del sistema operativo de tu equipo Gamer para que cargue más rápido tus juegos y programas.',
+    features: ['Revisión del equipo a domicilio (el domicilio no está incluido en el precio)','Eliminación de virus y programas ocultos innecesarios','Optimización del sistema operativo','Instalación y actualización de drivers y antivirus'],
+    precio: '$60.000', tiempo: 'Tiempo: 1 hora',
+    wa: 'https://wa.me/573135745889?text=Hola%20CYMORA!%20Quiero%20solicitar%20Mantenimiento%20de%20Software%20para%20mi%20equipo%20Gamer.'
+  },
+  'gamer-fisico': {
+    equipo: 'PC / Laptop Gamer', icono: '🔧', imagen: 'img-gamer-fisico.png',
+    titulo: 'Mantenimiento <span class="acc">Físico</span>',
+    desc: 'Limpieza interna profunda para que tu equipo Gamer se mantenga fresco y funcione al máximo rendimiento.',
+    features: ['Revisión del equipo a domicilio (el domicilio no está incluido en el precio)','Limpieza interna profunda de componentes','Cambio de pasta térmica','Revisión de ventilación y refrigeración'],
+    precio: '$150.000', tiempo: 'Tiempo: 1 a 2 horas',
+    wa: 'https://wa.me/573135745889?text=Hola%20CYMORA!%20Quiero%20solicitar%20Mantenimiento%20F%C3%ADsico%20para%20mi%20equipo%20Gamer.'
+  },
+  'gamer-total': {
+    equipo: 'PC / Laptop Gamer', icono: '⚡', imagen: 'img-gamer-total.png',
+    titulo: 'Mantenimiento <span class="acc">Total</span>',
+    desc: 'El mantenimiento más completo para tu equipo Gamer: combina el servicio físico y el de software para dejarlo como nuevo.',
+    features: ['Revisión del equipo a domicilio (el domicilio no está incluido en el precio)','Incluye mantenimiento físico y de software completos','Desensamble y limpieza de cada componente','Ensamble de partes nuevas (en caso de ser necesario)'],
+    precio: '$180.000', tiempo: 'Tiempo: 2 a 3 horas',
+    wa: 'https://wa.me/573135745889?text=Hola%20CYMORA!%20Quiero%20solicitar%20Mantenimiento%20Total%20para%20mi%20equipo%20Gamer.'
+  },
+  'gamer-consolas': {
+    equipo: 'Consolas', icono: '🕹️', imagen: 'img-gamer-consolas.png',
+    titulo: 'Mantenimiento <span class="acc">de Consolas</span>',
+    desc: 'Mantenimiento físico completo para consolas de videojuegos: PS4, PS5, Xbox, Nintendo Switch y más.',
+    features: ['Revisión de la consola a domicilio (el domicilio no está incluido en el precio)','Limpieza interna profunda y cambio de pasta térmica','Revisión del sistema de ventilación','Prueba de funcionamiento antes de la entrega'],
+    precio: '$150.000', tiempo: 'Tiempo: 1 a 2 horas',
+    wa: 'https://wa.me/573135745889?text=Hola%20CYMORA!%20Quiero%20solicitar%20Mantenimiento%20para%20mi%20consola.'
+  },
+  'portatil-software': {
+    equipo: 'Portátil', icono: '💿', imagen: 'img-portatil-software.png',
+    titulo: 'Mantenimiento <span class="acc">de Software</span>',
+    desc: 'Mejoramos el rendimiento del sistema operativo de tu portátil para que sea más rápida la carga de programas o sitios web.',
+    features: ['Revisión del portátil a domicilio (el domicilio no está incluido en el precio)','Eliminación de virus y programas ocultos innecesarios','Corrección de errores del software o sistema operativo','Instalación de programas de limpieza y actualización de antivirus'],
+    precio: '$60.000', tiempo: 'Tiempo: 1 hora',
+    wa: 'https://wa.me/573135745889?text=Hola%20CYMORA!%20Quiero%20solicitar%20Mantenimiento%20de%20Software%20para%20mi%20port%C3%A1til.'
+  },
+  'portatil-fisico': {
+    equipo: 'Portátil', icono: '🔧', imagen: 'img-portatil-fisico.png',
+    titulo: 'Mantenimiento <span class="acc">Físico</span>',
+    desc: 'Limpieza interna para que tu portátil se mantenga fresco, silencioso y funcione al máximo rendimiento.',
+    features: ['Revisión del portátil a domicilio (el domicilio no está incluido en el precio)','Limpieza interna y cambio de pasta térmica','Revisión de batería','Revisión del sistema de refrigeración'],
+    precio: '$100.000', tiempo: 'Tiempo: 1 a 2 horas',
+    wa: 'https://wa.me/573135745889?text=Hola%20CYMORA!%20Quiero%20solicitar%20Mantenimiento%20F%C3%ADsico%20para%20mi%20port%C3%A1til.'
+  },
+  'portatil-total': {
+    equipo: 'Portátil', icono: '⚡', imagen: 'img-portatil-total.png',
+    titulo: 'Mantenimiento <span class="acc">Total para portátil</span>',
+    desc: 'Este es el mantenimiento más completo que hacemos para portátiles: incluye el servicio de mantenimiento del sistema y el servicio de mantenimiento físico.',
+    features: ['Revisión del portátil a domicilio (el domicilio no está incluido en el precio)','Desensamble del portátil para limpiar cada una de sus partes','Mejora del rendimiento del sistema y corrección de fallas en software','Ensamble de partes nuevas (en caso de ser necesario)'],
+    precio: '$130.000', tiempo: 'Tiempo: 1 a 2 horas',
+    wa: 'https://wa.me/573135745889?text=Hola%20CYMORA!%20Quiero%20solicitar%20Mantenimiento%20Total%20para%20mi%20port%C3%A1til.'
+  },
+  'escritorio-software': {
+    equipo: 'PC Escritorio', icono: '💿', imagen: 'img-escritorio-software.png',
+    titulo: 'Mantenimiento <span class="acc">de Software</span>',
+    desc: 'Mejoramos el rendimiento del sistema operativo de tu PC de escritorio para que sea más rápida la carga de programas o sitios web.',
+    features: ['Revisión del equipo a domicilio (el domicilio no está incluido en el precio)','Eliminación de virus y programas ocultos innecesarios','Corrección de errores del software o sistema operativo','Instalación de programas de limpieza y actualización de antivirus'],
+    precio: '$60.000', tiempo: 'Tiempo: 1 hora',
+    wa: 'https://wa.me/573135745889?text=Hola%20CYMORA!%20Quiero%20solicitar%20Mantenimiento%20de%20Software%20para%20mi%20PC%20de%20escritorio.'
+  },
+  'escritorio-fisico': {
+    equipo: 'PC Escritorio', icono: '🔧', imagen: 'img-escritorio-fisico.png',
+    titulo: 'Mantenimiento <span class="acc">Físico</span>',
+    desc: 'Limpieza interna profunda para que tu PC de escritorio se mantenga fresco y funcione al máximo rendimiento.',
+    features: ['Revisión del equipo a domicilio (el domicilio no está incluido en el precio)','Limpieza interna profunda de componentes','Cambio de pasta térmica','Revisión completa de componentes internos'],
+    precio: '$70.000', tiempo: 'Tiempo: 1 hora',
+    wa: 'https://wa.me/573135745889?text=Hola%20CYMORA!%20Quiero%20solicitar%20Mantenimiento%20F%C3%ADsico%20para%20mi%20PC%20de%20escritorio.'
+  },
+  'escritorio-total': {
+    equipo: 'PC Escritorio', icono: '⚡', imagen: 'img-escritorio-total.png',
+    titulo: 'Mantenimiento <span class="acc">Total</span>',
+    desc: 'La solución más completa para tu PC de escritorio: combina el servicio físico y el de software para dejarlo como nuevo.',
+    features: ['Revisión del equipo a domicilio (el domicilio no está incluido en el precio)','Incluye mantenimiento físico y de software completos','Desensamble y limpieza de cada componente','Ensamble de partes nuevas (en caso de ser necesario)'],
+    precio: '$100.000', tiempo: 'Tiempo: 1 a 2 horas',
+    wa: 'https://wa.me/573135745889?text=Hola%20CYMORA!%20Quiero%20solicitar%20Mantenimiento%20Total%20para%20mi%20PC%20de%20escritorio.'
+  }
+};
+
+// Abre la pestaña de detalle de un servicio con su información
+function openServicio(key) {
+  const s = SERVICIOS[key];
+  if(!s) return;
+  document.getElementById('sd-badge').textContent = s.equipo;
+  document.getElementById('sd-icon').textContent = s.icono;
+  document.getElementById('sd-img-box').classList.remove('has-img');
+  const sdImg = document.getElementById('sd-img');
+  sdImg.src = s.imagen;
+  document.getElementById('sd-title').innerHTML = s.titulo;
+  document.getElementById('sd-desc').textContent = s.desc;
+  document.getElementById('sd-price').textContent = s.precio;
+  document.getElementById('sd-time').textContent = s.tiempo;
+  const feat = document.getElementById('sd-features');
+  feat.innerHTML = '';
+  s.features.forEach(f => {
+    const li = document.createElement('li');
+    li.textContent = f;
+    feat.appendChild(li);
+  });
+  document.getElementById('sd-wa-btn').href = s.wa;
+  showPage(null, 'servicio-detalle');
+}
+
+// ===== SISTEMA DE PESTAÑAS (PÁGINAS) =====
+function showPage(e, pageId, scrollToId) {
+  if(e && e.preventDefault) e.preventDefault();
+
+  // Mostrar solo la página seleccionada
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const pageEl = document.getElementById('page-' + pageId);
+  pageEl.classList.add('active');
+
+  // Los elementos "reveal" de páginas que estaban en display:none nunca
+  // fueron detectados por el IntersectionObserver: los mostramos directamente
+  pageEl.querySelectorAll('.reveal').forEach(r => r.classList.add('visible'));
+
+  // Marcar el link activo en el nav
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  document.querySelectorAll('.nav-links a[data-page="' + pageId + '"]').forEach(a => a.classList.add('active'));
+
+  // Si entramos al área de empleados, revisar si ya hay sesión guardada
+  if(pageId === 'empleados' && typeof intentarSesionGuardada === 'function') {
+    intentarSesionGuardada();
+  }
+
+  // Ir arriba del todo, o a un ancla específica dentro de la página
+  if(scrollToId) {
+    setTimeout(() => {
+      const target = document.getElementById(scrollToId);
+      if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
+    }, 60);
+  } else {
+    window.scrollTo({top:0, behavior:'instant' in window ? 'instant' : 'auto'});
+  }
+}
+
+// ===== API =====
+const API_BASE = '/api';
+
+function getToken() { return localStorage.getItem('cymora_token'); }
+function setToken(t) { localStorage.setItem('cymora_token', t); }
+function clearToken() { localStorage.removeItem('cymora_token'); }
+
+// Login empleado (contra el backend real)
+async function loginEmpleado() {
+  const usuario = document.getElementById('emp-user').value.trim();
+  const password = document.getElementById('emp-pass').value;
+
+  if(!usuario || !password) {
+    showToast('⚠️ Ingresa usuario y contraseña');
+    return;
+  }
+
+  const btn = document.querySelector('#emp-login-panel .fsub');
+  const textoOriginal = btn.textContent;
+  btn.disabled = true; btn.textContent = 'Entrando...';
+
+  try {
+    const res = await fetch(`${API_BASE}/auth/login`, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({usuario, password})
+    });
+    const data = await res.json();
+
+    if(!res.ok) {
+      showToast('❌ ' + (data.error || 'Usuario o contraseña incorrectos'));
+      return;
+    }
+
+    setToken(data.token);
+    document.getElementById('emp-login-panel').style.display='none';
+    document.getElementById('solicitudes-panel').classList.add('visible');
+    document.getElementById('emp-pass').value='';
+    showToast(`✅ Bienvenido, ${data.nombre}`);
+    loadSolicitudes();
+  } catch(err) {
+    console.error(err);
+    showToast('❌ No se pudo conectar con el servidor');
+  } finally {
+    btn.disabled = false; btn.textContent = textoOriginal;
+  }
+}
+
+function logoutEmpleado() {
+  clearToken();
+  document.getElementById('emp-login-panel').style.display='block';
+  document.getElementById('emp-pass').value='';
+  document.getElementById('solicitudes-panel').classList.remove('visible');
+  showPage(null, 'inicio');
+}
+
+// Si ya hay una sesión guardada, entra directo al panel al abrir la pestaña de Empleados
+async function intentarSesionGuardada() {
+  const token = getToken();
+  if(!token) return;
+  document.getElementById('emp-login-panel').style.display='none';
+  document.getElementById('solicitudes-panel').classList.add('visible');
+  loadSolicitudes();
+}
+
+// Cargar solicitudes reales desde MongoDB
+async function loadSolicitudes() {
+  const grid = document.getElementById('sol-grid');
+  grid.innerHTML = '<p class="sol-info-loading">Cargando solicitudes...</p>';
+
+  try {
+    const res = await fetch(`${API_BASE}/solicitudes`, {
+      headers: { 'Authorization': 'Bearer ' + getToken() }
+    });
+
+    if(res.status === 401) {
+      clearToken();
+      showToast('⚠️ Tu sesión expiró, inicia sesión de nuevo');
+      document.getElementById('emp-login-panel').style.display='block';
+      document.getElementById('solicitudes-panel').classList.remove('visible');
+      return;
+    }
+
+    const solicitudes = await res.json();
+    if(!res.ok) throw new Error(solicitudes.error || 'Error cargando solicitudes');
+
+    renderSolicitudes(solicitudes);
+  } catch(err) {
+    console.error(err);
+    grid.innerHTML = '<p class="sol-info-loading">❌ No se pudieron cargar las solicitudes. Revisa tu conexión con el servidor.</p>';
+  }
+}
+
+const ESTADOS = {
+  nueva:      { label: '🆕 Nueva',       clase: 'st-nueva' },
+  contactado: { label: '📞 Contactado',  clase: 'st-contactado' },
+  cerrada:    { label: '✅ Cerrada',     clase: 'st-cerrada' }
+};
+
+function renderSolicitudes(solicitudes) {
+  const grid = document.getElementById('sol-grid');
+  document.getElementById('sol-count').textContent = solicitudes.length + (solicitudes.length===1 ? ' solicitud' : ' solicitudes');
+
+  if(solicitudes.length === 0) {
+    grid.innerHTML = '<p class="sol-info-loading">Todavía no hay solicitudes empresariales registradas.</p>';
+    return;
+  }
+
+  grid.innerHTML = solicitudes.map(s => {
+    const estado = ESTADOS[s.estado] || ESTADOS.nueva;
+    const telDigits = (s.telefono || '').replace(/\D/g,'');
+    const fecha = s.createdAt ? new Date(s.createdAt).toLocaleDateString('es-CO', {day:'2-digit', month:'short', year:'numeric'}) : '';
+    const marcarBtn = s.estado === 'nueva'
+      ? `<button class="btn-mark" onclick="marcarContactado('${s._id}')">📞 Marcar contactado</button>`
+      : '';
+
+    return `<div class="sol-card">
+      <div>
+        <div class="sol-empresa">${escapeHtml(s.empresa)}</div>
+        <div class="sol-info">Contacto: ${escapeHtml(s.contacto)} — ${escapeHtml(s.email)}${fecha ? ' · '+fecha : ''}</div>
+        <div class="sol-badges">
+          <span class="sol-badge">${escapeHtml(s.tipoEquipo)}</span>
+          <span class="sol-badge">${s.cantidad} equipos</span>
+          <span class="sol-badge ${estado.clase}">${estado.label}</span>
+        </div>
+      </div>
+      <div class="sol-actions">
+        <a href="https://wa.me/${telDigits}?text=${encodeURIComponent('Hola '+s.contacto+'! Soy de CYMORA, vi tu solicitud de mantenimiento corporativo.')}" class="btn-contact-wa" target="_blank">💬 WhatsApp</a>
+        <a href="mailto:${s.email}?subject=${encodeURIComponent('Solicitud CYMORA - Mantenimiento Corporativo')}" class="btn-contact-em">📧 Email</a>
+        ${marcarBtn}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function marcarContactado(id) {
+  try {
+    const res = await fetch(`${API_BASE}/solicitudes/${id}/estado`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getToken()
+      },
+      body: JSON.stringify({estado: 'contactado'})
+    });
+    if(!res.ok) throw new Error();
+    showToast('✅ Marcado como contactado');
+    loadSolicitudes();
+  } catch(err) {
+    showToast('❌ No se pudo actualizar el estado');
+  }
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str ?? '';
+  return div.innerHTML;
+}
+
+// Ir a la pestaña de Empresas y al formulario, pre-seleccionando el tipo de equipo
+function scrollToEmpForm(tipo) {
+  document.getElementById('emp-tipo').value = tipo;
+  showPage(null, 'emp-form');
+}
+
+// Enviar solicitud empresa (guarda en MongoDB de verdad)
+async function enviarSolicitud() {
+  const empresa = document.getElementById('emp-nombre').value.trim();
+  const contacto = document.getElementById('emp-contacto').value.trim();
+  const email = document.getElementById('emp-email').value.trim();
+  const telefono = document.getElementById('emp-tel').value.trim();
+  const tipoEquipo = document.getElementById('emp-tipo').value;
+  const cantidad = document.getElementById('emp-cantidad').value;
+  const info = document.getElementById('emp-info').value.trim();
+
+  if(!empresa||!contacto||!email||!telefono||!tipoEquipo||!cantidad){
+    showToast('⚠️ Por favor completa todos los campos');
+    return;
+  }
+
+  const btn = document.querySelector('#emp-form-section .fsub');
+  const textoOriginal = btn.textContent;
+  btn.disabled = true; btn.textContent = 'Enviando...';
+
+  try {
+    const res = await fetch(`${API_BASE}/solicitudes`, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({empresa, contacto, email, telefono, tipoEquipo, cantidad: Number(cantidad), info})
+    });
+    const data = await res.json();
+
+    if(!res.ok) {
+      showToast('❌ ' + (data.error || 'No se pudo enviar la solicitud'));
+      return;
+    }
+
+    showToast('✅ Solicitud enviada. Te contactamos en menos de 24 horas.');
+    document.getElementById('emp-nombre').value='';
+    document.getElementById('emp-contacto').value='';
+    document.getElementById('emp-email').value='';
+    document.getElementById('emp-tel').value='';
+    document.getElementById('emp-tipo').value='';
+    document.getElementById('emp-cantidad').value='';
+    document.getElementById('emp-info').value='';
+  } catch(err) {
+    console.error(err);
+    showToast('❌ No se pudo conectar con el servidor. Intenta de nuevo.');
+  } finally {
+    btn.disabled = false; btn.textContent = textoOriginal;
+  }
+}
+
+// Toast
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+// ===== ACCESIBILIDAD / PERSONALIZACIÓN =====
+function toggleA11yMenu() {
+  document.getElementById('a11y-menu').classList.toggle('open');
+}
+
+function applyA11yFilters() {
+  const dark = localStorage.getItem('cymora_dark') === '1';
+  const colorMode = localStorage.getItem('cymora_colormode') || 'normal';
+
+  // El modo oscuro ahora es un tema real (variables CSS), no un filtro que invierte colores.
+  // El modo daltonismo sigue aplicándose como filtro de color, ya que solo remapea tonos.
+  document.documentElement.style.filter = colorMode !== 'normal' ? `url(#filter-${colorMode})` : '';
+  document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+
+  document.getElementById('a11y-dark-icon').textContent = dark ? '☀️' : '🌙';
+  document.getElementById('a11y-dark').classList.toggle('active', dark);
+
+  document.querySelectorAll('.a11y-item[data-mode]').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.mode === colorMode);
+  });
+}
+
+function toggleDarkMode() {
+  const dark = localStorage.getItem('cymora_dark') === '1';
+  localStorage.setItem('cymora_dark', dark ? '0' : '1');
+  applyA11yFilters();
+}
+
+function setColorMode(mode) {
+  localStorage.setItem('cymora_colormode', mode);
+  applyA11yFilters();
+}
+
+// Cerrar el menú de accesibilidad si se hace clic fuera de él
+document.addEventListener('click', (e) => {
+  const wrap = document.querySelector('.a11y-fab-wrap');
+  const menu = document.getElementById('a11y-menu');
+  if(wrap && menu && !wrap.contains(e.target)) {
+    menu.classList.remove('open');
+  }
+});
+
+// Aplicar las preferencias guardadas apenas carga la página
+applyA11yFilters();
+
+</script>
+</body>
+</html>
