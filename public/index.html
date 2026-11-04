@@ -860,7 +860,6 @@ footer{background:var(--footer-bg);color:var(--footer-text);padding:60px 48px 28
 </div>
 
 <script>
-// Scroll reveal
 const obs = new IntersectionObserver(entries => {
   entries.forEach((e,i) => {
     if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('visible'),i*70); obs.unobserve(e.target); }
@@ -868,7 +867,6 @@ const obs = new IntersectionObserver(entries => {
 },{threshold:0.08});
 document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
 
-// Equipo tabs
 function switchEquipo(id, btn) {
   document.querySelectorAll('.equipo-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.etab').forEach(t=>t.classList.remove('active'));
@@ -876,7 +874,7 @@ function switchEquipo(id, btn) {
   btn.classList.add('active');
 }
 
-// ===== DATOS DE SERVICIOS (para la pestaña de detalle) =====
+// ===== DATOS DE SERVICIOS =====
 const SERVICIOS = {
   'gamer-software': {
     equipo: 'PC / Laptop Gamer', icono: '💿', imagen: 'img-gamer-software.png',
@@ -960,7 +958,6 @@ const SERVICIOS = {
   }
 };
 
-// Abre la pestaña de detalle de un servicio con su información
 function openServicio(key) {
   const s = SERVICIOS[key];
   if(!s) return;
@@ -984,29 +981,24 @@ function openServicio(key) {
   showPage(null, 'servicio-detalle');
 }
 
-// ===== SISTEMA DE PESTAÑAS (PÁGINAS) =====
+// ===== SISTEMA DE PESTAÑAS =====
 function showPage(e, pageId, scrollToId) {
   if(e && e.preventDefault) e.preventDefault();
 
-  // Mostrar solo la página seleccionada
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   const pageEl = document.getElementById('page-' + pageId);
   pageEl.classList.add('active');
 
-  // Los elementos "reveal" de páginas que estaban en display:none nunca
-  // fueron detectados por el IntersectionObserver: los mostramos directamente
+
   pageEl.querySelectorAll('.reveal').forEach(r => r.classList.add('visible'));
 
-  // Marcar el link activo en el nav
   document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
   document.querySelectorAll('.nav-links a[data-page="' + pageId + '"]').forEach(a => a.classList.add('active'));
 
-  // Si entramos al área de empleados, revisar si ya hay sesión guardada
   if(pageId === 'empleados' && typeof intentarSesionGuardada === 'function') {
     intentarSesionGuardada();
   }
 
-  // Ir arriba del todo, o a un ancla específica dentro de la página
   if(scrollToId) {
     setTimeout(() => {
       const target = document.getElementById(scrollToId);
@@ -1017,14 +1009,12 @@ function showPage(e, pageId, scrollToId) {
   }
 }
 
-// ===== API =====
 const API_BASE = '/api';
 
 function getToken() { return localStorage.getItem('cymora_token'); }
 function setToken(t) { localStorage.setItem('cymora_token', t); }
 function clearToken() { localStorage.removeItem('cymora_token'); }
 
-// Login empleado (contra el backend real)
 async function loginEmpleado() {
   const usuario = document.getElementById('emp-user').value.trim();
   const password = document.getElementById('emp-pass').value;
@@ -1073,7 +1063,6 @@ function logoutEmpleado() {
   showPage(null, 'inicio');
 }
 
-// Si ya hay una sesión guardada, entra directo al panel al abrir la pestaña de Empleados
 async function intentarSesionGuardada() {
   const token = getToken();
   if(!token) return;
@@ -1082,7 +1071,6 @@ async function intentarSesionGuardada() {
   loadSolicitudes();
 }
 
-// Cargar solicitudes reales desde MongoDB
 async function loadSolicitudes() {
   const grid = document.getElementById('sol-grid');
   grid.innerHTML = '<p class="sol-info-loading">Cargando solicitudes...</p>';
@@ -1176,13 +1164,11 @@ function escapeHtml(str) {
   return div.innerHTML;
 }
 
-// Ir a la pestaña de Empresas y al formulario, pre-seleccionando el tipo de equipo
 function scrollToEmpForm(tipo) {
   document.getElementById('emp-tipo').value = tipo;
   showPage(null, 'emp-form');
 }
 
-// Enviar solicitud empresa (guarda en MongoDB de verdad)
 async function enviarSolicitud() {
   const empresa = document.getElementById('emp-nombre').value.trim();
   const contacto = document.getElementById('emp-contacto').value.trim();
@@ -1230,7 +1216,6 @@ async function enviarSolicitud() {
   }
 }
 
-// Toast
 function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
@@ -1247,8 +1232,7 @@ function applyA11yFilters() {
   const dark = localStorage.getItem('cymora_dark') === '1';
   const colorMode = localStorage.getItem('cymora_colormode') || 'normal';
 
-  // El modo oscuro ahora es un tema real (variables CSS), no un filtro que invierte colores.
-  // El modo daltonismo sigue aplicándose como filtro de color, ya que solo remapea tonos.
+  
   document.documentElement.style.filter = colorMode !== 'normal' ? `url(#filter-${colorMode})` : '';
   document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
 
@@ -1271,7 +1255,6 @@ function setColorMode(mode) {
   applyA11yFilters();
 }
 
-// Cerrar el menú de accesibilidad si se hace clic fuera de él
 document.addEventListener('click', (e) => {
   const wrap = document.querySelector('.a11y-fab-wrap');
   const menu = document.getElementById('a11y-menu');
@@ -1280,7 +1263,6 @@ document.addEventListener('click', (e) => {
   }
 });
 
-// Aplicar las preferencias guardadas apenas carga la página
 applyA11yFilters();
 
 </script>
