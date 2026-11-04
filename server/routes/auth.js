@@ -5,7 +5,6 @@ const Empleado = require('../models/Empleado');
 
 const router = express.Router();
 
-// POST /api/auth/login
 router.post('/login', async (req, res) => {
   try {
     const { usuario, password } = req.body;
