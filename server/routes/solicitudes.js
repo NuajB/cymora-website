@@ -4,7 +4,6 @@ const requireAuth = require('../middleware/auth');
 
 const router = express.Router();
 
-// POST /api/solicitudes -> pública, la usa el formulario "Solicitar diagnóstico empresarial"
 router.post('/', async (req, res) => {
   try {
     const { empresa, contacto, email, telefono, tipoEquipo, cantidad, info } = req.body;
@@ -30,7 +29,6 @@ router.post('/', async (req, res) => {
   }
 });
 
-// GET /api/solicitudes -> protegida, la usa el panel de empleados
 router.get('/', requireAuth, async (req, res) => {
   try {
     const solicitudes = await Solicitud.find().sort({ createdAt: -1 });
@@ -41,7 +39,6 @@ router.get('/', requireAuth, async (req, res) => {
   }
 });
 
-// PATCH /api/solicitudes/:id/estado -> protegida, marcar como contactado/cerrada
 router.patch('/:id/estado', requireAuth, async (req, res) => {
   try {
     const { estado } = req.body;
