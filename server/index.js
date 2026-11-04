@@ -12,15 +12,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// ---- API ----
 app.use('/api/auth', authRoutes);
 app.use('/api/solicitudes', solicitudesRoutes);
 
-// ---- Frontend estático (carpeta /public) ----
 const publicDir = path.join(__dirname, '..', 'public');
 app.use(express.static(publicDir));
 
-// Cualquier otra ruta devuelve el index.html (sitio de una sola página)
 app.get('*', (req, res) => {
   res.sendFile(path.join(publicDir, 'index.html'));
 });
