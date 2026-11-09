@@ -289,9 +289,38 @@ footer{background:var(--footer-bg);color:var(--footer-text);padding:60px 48px 28
 .a11y-fab{width:56px;height:56px;border-radius:50%;background:var(--blue);color:white;border:none;font-size:24px;font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif;line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 6px 18px rgba(79,126,248,.5);transition:transform .2s;flex-shrink:0}
 .a11y-fab:hover{transform:scale(1.08)}
 .a11y-fab-img{width:28px;height:28px;object-fit:contain;pointer-events:none}
-.a11y-menu{display:flex;flex-direction:column;gap:10px;align-items:center;max-height:0;opacity:0;pointer-events:none;overflow:visible;transition:opacity .2s}
-.a11y-menu.open{max-height:400px;opacity:1;pointer-events:auto}
+.a11y-menu{display:flex;flex-direction:column;gap:10px;align-items:center;max-height:0;pointer-events:none;overflow:visible;transition:max-height .4s ease;position:relative;z-index:1}
+.a11y-menu.open{max-height:400px;pointer-events:auto}
 .a11y-item{width:46px;height:46px;border-radius:50%;background:var(--surface);border:2px solid var(--blue-light);color:var(--blue-dark);font-size:18px;font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif;line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:var(--shadow);transition:all .2s;position:relative;flex-shrink:0}
+.a11y-fab{position:relative;z-index:3;transition:transform .35s cubic-bezier(.34,1.56,.64,1)}
+.a11y-fab.open{transform:rotate(25deg) scale(1.06)}
+.a11y-menu .a11y-item{opacity:0;transform:translateY(70px) scale(.3);transition:transform .3s ease,opacity .2s ease,background .2s,border-color .2s}
+.a11y-menu.open .a11y-item{opacity:1;transform:none}
+.a11y-menu.open .a11y-item:nth-child(5){transition-delay:.02s}
+.a11y-menu.open .a11y-item:nth-child(4){transition-delay:.07s}
+.a11y-menu.open .a11y-item:nth-child(3){transition-delay:.12s}
+.a11y-menu.open .a11y-item:nth-child(2){transition-delay:.17s}
+.a11y-menu.open .a11y-item:nth-child(1){transition-delay:.22s}
+.a11y-menu.open .a11y-item:hover{transform:scale(1.08)}
+.sup-fab{width:46px;height:46px;border-radius:50%;background:var(--green);color:var(--ink);border:2px solid var(--blue-light);font-size:20px;font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif;line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:var(--shadow);transition:transform .2s;position:relative;z-index:2;flex-shrink:0}
+.sup-fab:hover{transform:scale(1.08)}
+.sup-fab .a11y-tooltip{right:56px}
+.sup-fab:hover .a11y-tooltip{opacity:1}
+.chat-win{position:fixed;right:96px;bottom:24px;width:340px;height:460px;max-height:calc(100vh - 48px);background:var(--surface);border:2px solid var(--border-soft-2);border-radius:var(--r);box-shadow:var(--shadow);z-index:199;display:none;flex-direction:column;overflow:hidden}
+.chat-win.open{display:flex}
+.chat-head{background:var(--blue);color:white;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.chat-head b{font-size:14px;display:block}
+.chat-head small{font-size:12px;opacity:.9}
+.chat-x{background:transparent;border:none;color:white;font-size:22px;line-height:1;cursor:pointer}
+.chat-body{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:8px;background:var(--bg)}
+.chat-msg{max-width:85%;padding:9px 12px;border-radius:14px;font-size:13px;line-height:1.5;white-space:pre-wrap;word-break:break-word;background:var(--surface);color:var(--text);border:1px solid var(--border-soft-2)}
+.chat-msg.cliente{align-self:flex-end;background:var(--blue);color:white;border-color:var(--blue)}
+.chat-msg.soporte{border-color:var(--green);border-width:2px}
+.chat-msg small{display:block;font-size:10px;opacity:.7;margin-bottom:2px;font-weight:700}
+.chat-form{display:flex;gap:8px;padding:10px;border-top:2px solid var(--border-soft-2);background:var(--surface)}
+.chat-form input{flex:1;border:2px solid var(--border-soft-2);border-radius:var(--r-sm);padding:9px 12px;font-family:inherit;font-size:13px;background:var(--bg);color:var(--text);min-width:0}
+.chat-form button{background:var(--blue);color:white;border:none;border-radius:var(--r-sm);padding:0 14px;font-weight:700;cursor:pointer;font-family:inherit}
+@media(max-width:560px){.chat-win{right:12px;left:12px;width:auto;bottom:90px;height:60vh}}
 .a11y-item:hover{transform:scale(1.08)}
 .a11y-item.active{background:var(--blue);color:white;border-color:var(--blue-dark)}
 .a11y-tooltip{position:absolute;right:56px;top:50%;transform:translateY(-50%);background:var(--ink);color:white;font-size:11px;font-weight:600;padding:5px 10px;border-radius:8px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s}
@@ -328,6 +357,44 @@ footer{background:var(--footer-bg);color:var(--footer-text);padding:60px 48px 28
 .sd-cta{max-width:320px}
 
 @media(max-width:768px){nav{padding:14px 18px}.nav-links{display:none}#inicio,#nosotros,#individuales,#opiniones,#empresas,#empleados,#contacto,#servicio-detalle{padding-left:18px;padding-right:18px}.form-row,.sd-grid,.corp-how{grid-template-columns:1fr}footer{padding:40px 18px 24px}}
+
+#cliente{padding:100px 48px}
+.cli-wrap{max-width:1000px;margin:0 auto}
+.cli-dash{display:none}
+.cli-dash.visible{display:block}
+.cli-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:24px}
+.cli-head h3{font-family:'Nunito',sans-serif;font-size:26px;font-weight:900}
+.cli-tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px}
+.cli-tab{padding:10px 20px;border-radius:100px;font-weight:700;font-size:14px;cursor:pointer;border:2px solid var(--blue-light);background:var(--surface);color:var(--blue);font-family:inherit}
+.cli-tab.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.cli-sec{display:none}
+.cli-sec.active{display:block}
+.cli-card{background:var(--surface);border-radius:var(--r);padding:22px 24px;box-shadow:var(--shadow);border:2px solid var(--border-soft);margin-bottom:16px}
+.cli-card h4{font-size:17px;font-weight:800;margin-bottom:8px}
+.cli-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.cli-row{display:flex;justify-content:space-between;gap:10px;font-size:13px;padding:5px 0;border-bottom:1px dashed var(--border-soft-2)}
+.cli-row span:first-child{color:var(--text-mid)}
+.cli-badge{display:inline-block;padding:4px 12px;border-radius:100px;font-size:12px;font-weight:800;background:var(--surface-2);color:var(--text)}
+.cli-badge.ok{background:var(--green);color:#064e3b}
+.cli-badge.warn{background:var(--orange);color:#7c2d12}
+.cli-badge.info{background:var(--blue-light);color:var(--blue-dark)}
+.cli-imgs{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.cli-imgs img{width:110px;height:110px;object-fit:cover;border-radius:12px;cursor:pointer}
+.cli-btn{padding:8px 16px;border-radius:var(--r-sm);border:2px solid var(--blue-light);background:var(--surface);color:var(--blue);font-weight:700;font-size:13px;cursor:pointer;font-family:inherit}
+.cli-msg{padding:8px 12px;border-radius:12px;margin-bottom:8px;font-size:13px;max-width:85%;background:var(--surface-2)}
+.cli-msg.cliente{margin-left:auto;background:var(--blue-light);color:var(--blue-dark)}
+.cli-msg small{display:block;font-weight:800;font-size:11px;opacity:.7}
+.cli-empty{text-align:center;color:var(--text-light);font-size:14px;padding:24px 0}
+@media(max-width:768px){#cliente{padding-left:18px;padding-right:18px}}
+
+.emp-tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px}
+.emp-sec{display:none}
+.emp-sec.active{display:block}
+.emp-bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.emp-bar .fi{width:auto;flex:1;min-width:140px}
+.emp-fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px;margin:10px 0}
+.emp-item{cursor:pointer}
+.emp-danger{border-color:#f87171;color:#dc2626}
 </style>
 </head>
 <body>
@@ -341,6 +408,7 @@ footer{background:var(--footer-bg);color:var(--footer-text);padding:60px 48px 28
     <a href="#individuales" onclick="showPage(event,'inicio','individuales')">Servicios</a>
     <a href="#empresas" data-page="empresas" onclick="showPage(event,'empresas')">Empresas</a>
     <a href="#contacto" onclick="showPage(event,'inicio','contacto')">Contacto</a>
+    <a href="#cliente" data-page="cliente" onclick="showPage(event,'cliente')">Mi cuenta</a>
     <a href="#empleados" data-page="empleados" class="nav-emp" onclick="showPage(event,'empleados')">Área Empleados</a>
   </div>
 </nav>
@@ -759,6 +827,42 @@ footer{background:var(--footer-bg);color:var(--footer-text);padding:60px 48px 28
 </div>
 <!-- FIN PÁGINA: FORMULARIO DIAGNÓSTICO EMPRESARIAL -->
 
+<!-- PÁGINA: CLIENTE -->
+<div class="page" id="page-cliente">
+<section id="cliente">
+  <div class="sh">
+    <span class="eyebrow">Zona de clientes</span>
+    <h2>Mi cuenta<br>CYMORA</h2>
+  </div>
+  <div class="emp-login-wrap" id="cli-login-panel">
+    <div class="emp-login-card">
+      <h3>Iniciar sesión</h3>
+      <p class="sub">Ingresa con tu número de documento.</p>
+      <div class="fg"><label class="fl">Documento</label><input type="text" class="fi" id="cli-doc" placeholder="Número de documento"></div>
+      <div class="fg" style="margin-top:14px"><label class="fl">Contraseña</label><input type="password" class="fi" id="cli-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')loginCliente()"></div>
+      <button class="fsub" style="margin-top:20px" onclick="loginCliente()">Entrar →</button>
+    </div>
+  </div>
+  <div class="cli-wrap cli-dash" id="cli-dash">
+    <div class="cli-head">
+      <div><h3 id="cli-nombre"></h3><div id="cli-resumen" style="margin-top:6px"></div></div>
+      <button class="logout-btn" onclick="logoutCliente()">Cerrar sesión</button>
+    </div>
+    <div class="cli-tabs">
+      <button class="cli-tab active" data-t="equipos" onclick="cliTab('equipos')">Mis equipos</button>
+      <button class="cli-tab" data-t="calendario" onclick="cliTab('calendario')">Calendario</button>
+      <button class="cli-tab" data-t="avances" onclick="cliTab('avances')">Avances</button>
+      <button class="cli-tab" data-t="tickets" onclick="cliTab('tickets')">Tickets</button>
+    </div>
+    <div class="cli-sec active" id="cli-equipos"></div>
+    <div class="cli-sec" id="cli-calendario"></div>
+    <div class="cli-sec" id="cli-avances"></div>
+    <div class="cli-sec" id="cli-tickets"></div>
+  </div>
+</section>
+</div>
+<!-- FIN PÁGINA: CLIENTE -->
+
 <!-- PÁGINA: EMPLEADOS -->
 <div class="page" id="page-empleados">
 
@@ -785,17 +889,26 @@ footer{background:var(--footer-bg);color:var(--footer-text);padding:60px 48px 28
   <div class="solicitudes-panel" id="solicitudes-panel">
     <div class="sol-header">
       <div>
-        <h3>Solicitudes empresariales</h3>
-        <p style="font-size:13px;color:var(--text-light);margin-top:4px">Contacta a cada empresa por WhatsApp o Email</p>
+        <h3 id="emp-titulo">Solicitudes empresariales</h3>
+        <p id="emp-subtitulo" style="font-size:13px;color:var(--text-light);margin-top:4px">Contacta a cada empresa por WhatsApp o Email</p>
       </div>
       <div style="display:flex;gap:10px;align-items:center">
         <span class="sol-count" id="sol-count">3 solicitudes</span>
         <button class="logout-btn" onclick="logoutEmpleado()">Cerrar sesión</button>
       </div>
     </div>
+    <div class="emp-tabs">
+      <button class="cli-tab active" data-et="solicitudes" onclick="empTab('solicitudes')">Solicitudes</button>
+      <button class="cli-tab" data-et="clientes" onclick="empTab('clientes')">Clientes</button>
+      <button class="cli-tab" data-et="tickets" onclick="empTab('tickets')">Tickets</button>
+    </div>
+    <div class="emp-sec active" id="emp-solicitudes">
     <div class="sol-grid" id="sol-grid">
       <p id="sol-empty" style="text-align:center;color:var(--text-light);font-size:14px;padding:24px 0">Cargando solicitudes...</p>
     </div>
+    </div>
+    <div class="emp-sec" id="emp-clientes"></div>
+    <div class="emp-sec" id="emp-tickets"></div>
   </div>
 </section>
 
@@ -857,6 +970,12 @@ footer{background:var(--footer-bg);color:var(--footer-text);padding:60px 48px 28
       👁️<span class="a11y-tooltip">Visión normal</span>
     </button>
   </div>
+  <button class="sup-fab" id="sup-toggle" onclick="toggleChat()" aria-label="Soporte">🎧<span class="a11y-tooltip">Soporte</span></button>
+</div>
+<div class="chat-win" id="chat-win">
+  <div class="chat-head"><div><b>Soporte CYMORA</b><small id="chat-ticket">Sin ticket</small></div><button class="chat-x" onclick="toggleChat()" aria-label="Cerrar">×</button></div>
+  <div class="chat-body" id="chat-body"></div>
+  <form class="chat-form" onsubmit="chatSend(event)"><input id="chat-input" type="text" placeholder="Escribe tu mensaje..." autocomplete="off" maxlength="500"><button type="submit">Enviar</button></form>
 </div>
 
 <script>
@@ -994,6 +1113,8 @@ function showPage(e, pageId, scrollToId) {
 
   document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
   document.querySelectorAll('.nav-links a[data-page="' + pageId + '"]').forEach(a => a.classList.add('active'));
+
+  if(pageId === 'cliente') cliIniciar();
 
   if(pageId === 'empleados' && typeof intentarSesionGuardada === 'function') {
     intentarSesionGuardada();
@@ -1225,7 +1346,8 @@ function showToast(msg) {
 
 // ===== ACCESIBILIDAD / PERSONALIZACIÓN =====
 function toggleA11yMenu() {
-  document.getElementById('a11y-menu').classList.toggle('open');
+  const open = document.getElementById('a11y-menu').classList.toggle('open');
+  document.getElementById('a11y-toggle').classList.toggle('open', open);
 }
 
 function applyA11yFilters() {
@@ -1260,11 +1382,522 @@ document.addEventListener('click', (e) => {
   const menu = document.getElementById('a11y-menu');
   if(wrap && menu && !wrap.contains(e.target)) {
     menu.classList.remove('open');
+    document.getElementById('a11y-toggle').classList.remove('open');
   }
 });
 
+const CHAT_FAQ = [
+  { k: ['hola','buenas','buenos dias','buenas tardes','buenas noches'], r: 'Hola, soy el asistente de CYMORA. Pregúntame por nuestros servicios, planes o cómo contratarnos.' },
+  { k: ['servicio','ofrecen','hacen','mantenimiento'], r: 'Ofrecemos mantenimiento preventivo y correctivo de equipos de cómputo, consolas y equipos gamer. Puedes ver el detalle de cada uno en la sección de servicios.' },
+  { k: ['contratar','contrato','solicitar','cotizar','cotizacion','como pido'], r: 'Para contratar un servicio entra a la sección de servicios, elige el que necesitas y pulsa "Ver detalles y solicitar". Si eres empresa, usa el formulario de empresas.' },
+  { k: ['domicilio','casa','visita'], r: 'Tenemos servicio a domicilio para trabajos que se pueden resolver en el sitio. Si el equipo requiere varios días, lo recibimos en nuestro local.' },
+  { k: ['plan','mensual','anual','empresa','empresarial'], r: 'Las empresas pueden contratar planes mensuales o anuales con visitas de mantenimiento preventivo programadas. Solicítalo desde el formulario de empresas.' },
+  { k: ['cuenta','dashboard','panel','ingresar','iniciar sesion','contrasena'], r: 'La cuenta de cliente se crea cuando dejas equipos con nosotros o contratas un plan. Tu usuario y contraseña son tu número de documento.', },
+  { k: ['pago','pagar','precio','costo','cuanto','valor'], r: 'Los valores dependen del equipo y del servicio. Solicita una cotización desde la sección de servicios o contacto.' },
+  { k: ['contacto','whatsapp','telefono','correo','email','ubicacion','direccion','horario'], r: 'Puedes contactarnos desde la sección de contacto de esta página.' },
+  { k: ['estado','equipo','dispositivo','avance','cuando'], r: 'Puedes ver el estado de tus equipos y los avances en tu panel de cliente.', cliente: true },
+  { k: ['fecha','calendario','reasignar','cambiar visita'], r: 'En tu panel de cliente, dentro del calendario, puedes solicitar la reasignación de una visita.', cliente: true },
+  { k: ['gracias','chao','adios'], r: 'Con gusto. Si necesitas algo más, aquí estoy.' }
+];
+const chatState = { ticketId: localStorage.getItem('cymora_chat_id'), token: localStorage.getItem('cymora_chat_token'), log: [], poll: null, vistos: 0 };
+
+function chatCliToken() { return localStorage.getItem('cymora_ctoken'); }
+
+function chatNorm(t) { return t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''); }
+
+async function chatApi(path, method, body) {
+  const headers = { 'Content-Type': 'application/json' };
+  const t = chatCliToken();
+  if (t) headers.Authorization = 'Bearer ' + t;
+  const res = await fetch(API_BASE + path, { method: method || 'GET', headers, body: body ? JSON.stringify(body) : undefined });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.error || 'Error');
+  return data;
+}
+
+function chatAdd(autor, texto) {
+  const box = document.getElementById('chat-body');
+  const d = document.createElement('div');
+  d.className = 'chat-msg ' + autor;
+  if (autor !== 'cliente') {
+    const s = document.createElement('small');
+    s.textContent = autor === 'soporte' ? 'Soporte' : 'Asistente';
+    d.appendChild(s);
+  }
+  d.appendChild(document.createTextNode(texto));
+  box.appendChild(d);
+  box.scrollTop = box.scrollHeight;
+}
+
+function chatSetTicket(num) {
+  document.getElementById('chat-ticket').textContent = num ? 'Ticket #' + num : 'Sin ticket';
+}
+
+function chatReset() {
+  localStorage.removeItem('cymora_chat_id');
+  localStorage.removeItem('cymora_chat_token');
+  chatState.ticketId = null; chatState.token = null; chatState.log = []; chatState.vistos = 0;
+  chatSetTicket(null);
+}
+
+async function chatLoad() {
+  if (!chatState.ticketId) return;
+  try {
+    const q = chatCliToken() ? '' : '?token=' + encodeURIComponent(chatState.token || '');
+    const t = await chatApi('/tickets/' + chatState.ticketId + q);
+    chatSetTicket(t.numero);
+    if (t.mensajes.length !== chatState.vistos) {
+      document.getElementById('chat-body').innerHTML = '';
+      t.mensajes.forEach(m => chatAdd(m.autor, m.texto));
+      chatState.vistos = t.mensajes.length;
+    }
+    if (t.estado === 'cerrado') {
+      chatAdd('bot', 'Este ticket fue cerrado. Escribe de nuevo para abrir una nueva consulta.');
+      chatReset();
+    }
+  } catch (e) {
+    chatReset();
+  }
+}
+
+function toggleChat() {
+  const w = document.getElementById('chat-win');
+  const open = w.classList.toggle('open');
+  clearInterval(chatState.poll);
+  if (!open) return;
+  const box = document.getElementById('chat-body');
+  if (!box.childElementCount) {
+    chatAdd('bot', 'Hola, soy el asistente de CYMORA. ¿En qué te puedo ayudar?');
+    chatLoad();
+  }
+  chatSetTicket(null);
+  if (chatState.ticketId) {
+    chatLoad();
+    chatState.poll = setInterval(chatLoad, 8000);
+  }
+  document.getElementById('chat-input').focus();
+}
+
+function chatMatch(texto) {
+  const n = chatNorm(texto);
+  const esCli = !!chatCliToken();
+  let mejor = null, puntos = 0;
+  CHAT_FAQ.forEach(f => {
+    if (f.cliente && !esCli) return;
+    const p = f.k.filter(k => n.includes(k)).length;
+    if (p > puntos) { puntos = p; mejor = f; }
+  });
+  return mejor;
+}
+
+async function chatSend(e) {
+  e.preventDefault();
+  const input = document.getElementById('chat-input');
+  const texto = input.value.trim();
+  if (!texto) return;
+  input.value = '';
+  chatAdd('cliente', texto);
+  try {
+    if (chatState.ticketId) {
+      const q = chatCliToken() ? {} : { token: chatState.token };
+      await chatApi('/tickets/' + chatState.ticketId + '/mensajes', 'POST', Object.assign({ texto }, q));
+      chatState.vistos++;
+      return;
+    }
+    chatState.log.push({ autor: 'cliente', texto });
+    const f = chatMatch(texto);
+    if (f) {
+      chatAdd('bot', f.r);
+      chatState.log.push({ autor: 'bot', texto: f.r });
+      return;
+    }
+    const aviso = 'No tengo una respuesta para eso. Creé un ticket y un asesor te responderá por aquí.';
+    const t = await chatApi('/tickets', 'POST', { titulo: texto, mensajes: chatState.log.concat([{ autor: 'bot', texto: aviso }]) });
+    chatState.ticketId = t._id;
+    chatState.token = t.publicToken || '';
+    localStorage.setItem('cymora_chat_id', t._id);
+    if (t.publicToken) localStorage.setItem('cymora_chat_token', t.publicToken);
+    chatState.vistos = t.mensajes.length;
+    chatState.log = [];
+    chatAdd('bot', aviso);
+    chatSetTicket(t.numero);
+    clearInterval(chatState.poll);
+    chatState.poll = setInterval(chatLoad, 8000);
+  } catch (err) {
+    chatAdd('bot', 'No se pudo enviar tu mensaje. Intenta de nuevo.');
+  }
+}
+
 applyA11yFilters();
 
+const CLI_ESTADOS = { recibido:['Recibido','info'], diagnostico:['En diagnóstico','info'], en_mantenimiento:['En mantenimiento','warn'], listo:['Listo para entrega','ok'], entregado:['Entregado','ok'] };
+const CLI_VISITA = { programada:['Programada','info'], reasignacion_solicitada:['Reasignación solicitada','warn'], realizada:['Realizada','ok'] };
+const CLI_TICKET = { abierto:['Abierto','warn'], en_espera:['En espera','info'], cerrado:['Cerrado','ok'] };
+let cliData = null;
+
+function esc(t) { return String(t == null ? '' : t).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function cliFecha(d) { return d ? new Date(d).toLocaleDateString('es-CO', { day:'2-digit', month:'short', year:'numeric' }) : '—'; }
+function cliBadge(mapa, k) { const m = mapa[k] || [k, '']; return '<span class="cli-badge ' + m[1] + '">' + esc(m[0]) + '</span>'; }
+function cliRow(a, b) { return b ? '<div class="cli-row"><span>' + a + '</span><span>' + esc(b) + '</span></div>' : ''; }
+
+async function cliApi(path, method, body) {
+  const res = await fetch(API_BASE + path, {
+    method: method || 'GET',
+    headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + chatCliToken() },
+    body: body ? JSON.stringify(body) : undefined
+  });
+  const data = await res.json().catch(() => ({}));
+  if (res.status === 401) { logoutCliente(true); throw new Error('Sesión expirada'); }
+  if (!res.ok) throw new Error(data.error || 'Error');
+  return data;
+}
+
+function cliMostrar(dash) {
+  document.getElementById('cli-login-panel').style.display = dash ? 'none' : 'block';
+  document.getElementById('cli-dash').classList.toggle('visible', dash);
+}
+
+async function loginCliente() {
+  const documento = document.getElementById('cli-doc').value.trim();
+  const password = document.getElementById('cli-pass').value;
+  if (!documento || !password) { showToast('⚠️ Ingresa documento y contraseña'); return; }
+  const btn = document.querySelector('#cli-login-panel .fsub');
+  btn.disabled = true; btn.textContent = 'Entrando...';
+  try {
+    const res = await fetch(API_BASE + '/auth/cliente/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ documento, password }) });
+    const data = await res.json();
+    if (!res.ok) { showToast('❌ ' + (data.error || 'Datos incorrectos')); return; }
+    localStorage.setItem('cymora_ctoken', data.token);
+    chatReset();
+    document.getElementById('cli-pass').value = '';
+    showToast('✅ Bienvenido, ' + data.nombre);
+    cliCargar();
+  } catch (e) {
+    showToast('❌ No se pudo conectar con el servidor');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Entrar →';
+  }
+}
+
+function logoutCliente(expirada) {
+  localStorage.removeItem('cymora_ctoken');
+  chatReset();
+  cliData = null;
+  cliMostrar(false);
+  if (expirada) showToast('⚠️ Tu sesión expiró, inicia sesión de nuevo');
+}
+
+function cliIniciar() {
+  if (chatCliToken()) { cliMostrar(true); cliCargar(); } else cliMostrar(false);
+}
+
+function cliTab(t) {
+  document.querySelectorAll('.cli-tab').forEach(b => b.classList.toggle('active', b.dataset.t === t));
+  document.querySelectorAll('.cli-sec').forEach(s => s.classList.toggle('active', s.id === 'cli-' + t));
+  if (t === 'tickets') cliCargarTickets();
+}
+
+async function cliCargar() {
+  try {
+    cliData = await cliApi('/clientes/yo');
+    cliMostrar(true);
+    cliRender();
+  } catch (e) {}
+}
+
+function cliRender() {
+  const c = cliData;
+  document.getElementById('cli-nombre').textContent = c.nombre;
+  document.getElementById('cli-resumen').innerHTML =
+    '<span class="cli-badge info">' + (c.tipo === 'empresa' ? 'Empresa' : 'Persona') + '</span> ' +
+    (c.servicio ? '<span class="cli-badge">' + esc(c.servicio) + '</span> ' : '') +
+    (c.plan && c.plan !== 'ninguno' ? '<span class="cli-badge ok">Plan ' + esc(c.plan) + '</span>' : '');
+
+  document.getElementById('cli-equipos').innerHTML = c.dispositivos.length
+    ? '<div class="cli-grid">' + c.dispositivos.map(d =>
+      '<div class="cli-card"><h4>' + esc(d.nombre) + '</h4>' + cliBadge(CLI_ESTADOS, d.estado) +
+      '<div style="margin-top:10px">' +
+      cliRow('Marca', d.marca) + cliRow('Tipo', d.tipoEquipo) + cliRow('Sistema operativo', d.sistemaOperativo) +
+      cliRow('N.º de producto', d.numeroProducto) + cliRow('Procesador', d.procesador) + cliRow('RAM', d.ram) +
+      cliRow('Almacenamiento', d.almacenamiento) + cliRow('Servicio contratado', d.servicio) + cliRow('Notas', d.notas) +
+      '</div></div>').join('') + '</div>'
+    : '<p class="cli-empty">Aún no tienes equipos registrados.</p>';
+
+  const visitas = c.visitas.slice().sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+  document.getElementById('cli-calendario').innerHTML = visitas.length
+    ? visitas.map(v =>
+      '<div class="cli-card" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap"><div><h4>' + cliFecha(v.fecha) +
+      '</h4><div style="font-size:13px;color:var(--text-mid)">Mantenimiento ' + esc(v.tipo) + (v.nota ? ' · ' + esc(v.nota) : '') +
+      '</div></div><div>' + cliBadge(CLI_VISITA, v.estado) +
+      (v.estado === 'programada' && v.tipo === 'hardware' ? ' <button class="cli-btn" onclick="cliReasignar(\'' + v._id + '\')">Solicitar cambio</button>' : '') +
+      '</div></div>').join('')
+    : '<p class="cli-empty">No hay visitas programadas.</p>';
+
+  document.getElementById('cli-avances').innerHTML = c.avances.length
+    ? c.avances.map(a =>
+      '<div class="cli-card"><div style="font-size:12px;color:var(--text-light);margin-bottom:6px">' + cliFecha(a.fecha) + (a.autor ? ' · ' + esc(a.autor) : '') +
+      '</div><div style="font-size:14px;line-height:1.6">' + esc(a.texto) + '</div>' +
+      (a.imagenes && a.imagenes.length ? '<div class="cli-imgs">' + a.imagenes.map(u => '<img src="' + esc(u) + '" alt="Avance" loading="lazy" onclick="window.open(this.src)">').join('') + '</div>' : '') +
+      '</div>').join('')
+    : '<p class="cli-empty">Aún no hay avances publicados.</p>';
+}
+
+async function cliReasignar(id) {
+  const motivo = prompt('¿Por qué necesitas cambiar la fecha?');
+  if (motivo === null) return;
+  try {
+    const r = await cliApi('/clientes/yo/visitas/' + id + '/reasignacion', 'POST', { motivo });
+    showToast('✅ Solicitud enviada. Ticket #' + r.numero);
+    cliCargar();
+  } catch (e) {
+    showToast('❌ ' + e.message);
+  }
+}
+
+async function cliCargarTickets() {
+  const box = document.getElementById('cli-tickets');
+  box.innerHTML = '<p class="cli-empty">Cargando...</p>';
+  try {
+    const lista = await cliApi('/tickets/mios');
+    box.innerHTML = lista.length
+      ? lista.map(t =>
+        '<div class="cli-card" style="cursor:pointer" onclick="cliVerTicket(\'' + t._id + '\')"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><h4>#' + t.numero + ' · ' + esc(t.titulo) +
+        '</h4>' + cliBadge(CLI_TICKET, t.estado) + '</div><div style="font-size:13px;color:var(--text-mid)">Motivo: ' + esc(t.motivo || '—') +
+        ' · Abierto: ' + cliFecha(t.createdAt) + (t.fechaCierre ? ' · Cerrado: ' + cliFecha(t.fechaCierre) : '') +
+        '</div><div id="cli-t-' + t._id + '" style="margin-top:12px"></div></div>').join('')
+      : '<p class="cli-empty">No tienes tickets.</p>';
+  } catch (e) {
+    box.innerHTML = '<p class="cli-empty">No se pudieron cargar los tickets.</p>';
+  }
+}
+
+async function cliVerTicket(id) {
+  const cont = document.getElementById('cli-t-' + id);
+  if (cont.innerHTML) { cont.innerHTML = ''; return; }
+  try {
+    const t = await cliApi('/tickets/' + id);
+    cont.innerHTML = t.mensajes.map(m =>
+      '<div class="cli-msg ' + m.autor + '"><small>' + (m.autor === 'cliente' ? 'Tú' : m.autor === 'soporte' ? 'Soporte' : 'Asistente') + ' · ' + cliFecha(m.fecha) + '</small>' + esc(m.texto) + '</div>').join('');
+  } catch (e) {
+    showToast('❌ ' + e.message);
+  }
+}
+const CLOUD_NAME = '';
+const UPLOAD_PRESET = '';
+const EMP_CAMPOS = [['nombre','Nombre'],['marca','Marca'],['sistemaOperativo','Sistema operativo'],['numeroProducto','N.º de producto'],['procesador','Procesador'],['ram','RAM'],['almacenamiento','Almacenamiento'],['servicio','Servicio'],['notas','Notas']];
+const EMP_TIPOS = ['Laptop','Desktop','Consola','Laptop gamer','Desktop gamer','Otro'];
+let empCli = null;
+let empTicket = null;
+
+async function empApi(path, method, body) {
+  const res = await fetch(API_BASE + path, {
+    method: method || 'GET',
+    headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + getToken() },
+    body: body ? JSON.stringify(body) : undefined
+  });
+  const data = await res.json().catch(() => ({}));
+  if (res.status === 401) { logoutEmpleado(); throw new Error('Sesión expirada'); }
+  if (!res.ok) throw new Error(data.error || 'Error');
+  return data;
+}
+
+function empOpts(lista, sel) { return lista.map(o => { const v = Array.isArray(o) ? o[0] : o; const t = Array.isArray(o) ? o[1] : o; return '<option value="' + v + '"' + (v === sel ? ' selected' : '') + '>' + t + '</option>'; }).join(''); }
+function empV(id) { return document.getElementById(id).value; }
+
+const EMP_TITULOS = { solicitudes: ['Solicitudes empresariales', 'Contacta a cada empresa por WhatsApp o Email'], clientes: ['Clientes', 'Cuentas, equipos, calendario y avances'], tickets: ['Tickets de soporte', 'Atiende, abre y cierra los tickets'] };
+
+function empTab(t) {
+  document.getElementById('emp-titulo').textContent = EMP_TITULOS[t][0];
+  document.getElementById('emp-subtitulo').textContent = EMP_TITULOS[t][1];
+  document.getElementById('sol-count').style.display = t === 'solicitudes' ? '' : 'none';
+  document.querySelectorAll('[data-et]').forEach(b => b.classList.toggle('active', b.dataset.et === t));
+  document.querySelectorAll('.emp-sec').forEach(x => x.classList.toggle('active', x.id === 'emp-' + t));
+  if (t === 'clientes') { empCli = null; empListarClientes(); }
+  if (t === 'tickets') { empTicket = null; empListarTickets(); }
+}
+
+async function empUpload(file) {
+  if (!CLOUD_NAME || !UPLOAD_PRESET) throw new Error('Falta configurar Cloudinary');
+  const fd = new FormData();
+  fd.append('file', file);
+  fd.append('upload_preset', UPLOAD_PRESET);
+  const res = await fetch('https://api.cloudinary.com/v1_1/' + CLOUD_NAME + '/image/upload', { method: 'POST', body: fd });
+  const data = await res.json();
+  if (!res.ok) throw new Error('No se pudo subir la imagen');
+  return data.secure_url;
+}
+
+async function empListarClientes() {
+  const box = document.getElementById('emp-clientes');
+  box.innerHTML = '<p class="cli-empty">Cargando...</p>';
+  try {
+    const lista = await empApi('/clientes');
+    box.innerHTML =
+      '<div class="cli-card"><h4>Nueva cuenta de cliente</h4><div class="emp-fgrid">' +
+      '<input class="fi" id="nc-nombre" placeholder="Nombre / Empresa">' +
+      '<input class="fi" id="nc-doc" placeholder="Documento (usuario y contraseña)">' +
+      '<select class="fi" id="nc-tipo"><option value="persona">Persona</option><option value="empresa">Empresa</option></select>' +
+      '<input class="fi" id="nc-servicio" placeholder="Servicio contratado">' +
+      '<select class="fi" id="nc-plan"><option value="ninguno">Sin plan</option><option value="mensual">Plan mensual</option><option value="anual">Plan anual</option></select>' +
+      '</div><button class="cli-btn" onclick="empCrearCliente()">Crear cuenta</button></div>' +
+      (lista.length ? lista.map(c =>
+        '<div class="cli-card emp-item" onclick="empAbrirCliente(\'' + c._id + '\')"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><h4>' + esc(c.nombre) + '</h4><span class="cli-badge info">' + esc(c.tipo) + (c.plan !== 'ninguno' ? ' · ' + esc(c.plan) : '') +
+        '</span></div><div style="font-size:13px;color:var(--text-mid)">Doc: ' + esc(c.documento) + ' · ' + c.dispositivos.length + ' equipo(s)' + (c.servicio ? ' · ' + esc(c.servicio) : '') + '</div></div>').join('')
+        : '<p class="cli-empty">No hay clientes todavía.</p>');
+  } catch (e) { box.innerHTML = '<p class="cli-empty">' + esc(e.message) + '</p>'; }
+}
+
+async function empCrearCliente() {
+  try {
+    await empApi('/clientes', 'POST', { nombre: empV('nc-nombre').trim(), documento: empV('nc-doc').trim(), tipo: empV('nc-tipo'), servicio: empV('nc-servicio').trim(), plan: empV('nc-plan') });
+    showToast('✅ Cuenta creada');
+    empListarClientes();
+  } catch (e) { showToast('❌ ' + e.message); }
+}
+
+async function empAbrirCliente(id) {
+  try {
+    empCli = await empApi('/clientes/' + id);
+    empRenderCli();
+  } catch (e) { showToast('❌ ' + e.message); }
+}
+
+function empRenderCli() {
+  const c = empCli;
+  const disp = c.dispositivos.map((d, i) =>
+    '<div class="cli-card"><div class="emp-fgrid">' +
+    EMP_CAMPOS.map(f => '<input class="fi" id="d' + i + '-' + f[0] + '" placeholder="' + f[1] + '" value="' + esc(d[f[0]]) + '">').join('') +
+    '<select class="fi" id="d' + i + '-tipoEquipo">' + empOpts(EMP_TIPOS, d.tipoEquipo) + '</select>' +
+    '<select class="fi" id="d' + i + '-estado">' + empOpts(Object.keys(CLI_ESTADOS).map(k => [k, CLI_ESTADOS[k][0]]), d.estado) + '</select>' +
+    '</div><button class="cli-btn" onclick="empGuardarDisp()">Guardar equipos</button> <button class="cli-btn emp-danger" onclick="empQuitarDisp(' + i + ')">Quitar</button></div>').join('');
+  const vis = c.visitas.map((v, i) =>
+    '<div class="emp-fgrid"><input class="fi" type="date" id="v' + i + '-fecha" value="' + new Date(v.fecha).toISOString().slice(0, 10) + '">' +
+    '<select class="fi" id="v' + i + '-tipo">' + empOpts(['hardware', 'software'], v.tipo) + '</select>' +
+    '<select class="fi" id="v' + i + '-estado">' + empOpts(Object.keys(CLI_VISITA).map(k => [k, CLI_VISITA[k][0]]), v.estado) + '</select>' +
+    '<input class="fi" id="v' + i + '-nota" placeholder="Nota" value="' + esc(v.nota) + '">' +
+    '<button class="cli-btn emp-danger" onclick="empQuitarVisita(' + i + ')">Quitar</button></div>').join('');
+  const av = c.avances.map(a =>
+    '<div class="cli-card"><div style="font-size:12px;color:var(--text-light)">' + cliFecha(a.fecha) + ' · ' + esc(a.autor) + '</div><div style="font-size:14px;margin-top:4px">' + esc(a.texto) + '</div>' +
+    (a.imagenes.length ? '<div class="cli-imgs">' + a.imagenes.map(u => '<img src="' + esc(u) + '" alt="">').join('') + '</div>' : '') +
+    '<button class="cli-btn emp-danger" style="margin-top:10px" onclick="empBorrarAvance(\'' + a._id + '\')">Eliminar</button></div>').join('');
+  document.getElementById('emp-clientes').innerHTML =
+    '<button class="cli-btn" onclick="empListarClientes()">← Volver</button>' +
+    '<div class="cli-card" style="margin-top:14px"><h4>' + esc(c.nombre) + ' · Doc ' + esc(c.documento) + '</h4><div class="emp-fgrid">' +
+    '<input class="fi" id="c-nombre" value="' + esc(c.nombre) + '">' +
+    '<select class="fi" id="c-tipo">' + empOpts([['persona', 'Persona'], ['empresa', 'Empresa']], c.tipo) + '</select>' +
+    '<input class="fi" id="c-servicio" placeholder="Servicio contratado" value="' + esc(c.servicio) + '">' +
+    '<select class="fi" id="c-plan">' + empOpts([['ninguno', 'Sin plan'], ['mensual', 'Plan mensual'], ['anual', 'Plan anual']], c.plan) + '</select>' +
+    '</div><button class="cli-btn" onclick="empGuardarCli()">Guardar datos</button> <button class="cli-btn emp-danger" onclick="empBorrarCli()">Eliminar cuenta</button></div>' +
+    '<h4 style="margin:18px 0 10px">Equipos</h4>' + disp + '<button class="cli-btn" onclick="empNuevoDisp()">+ Añadir equipo</button>' +
+    '<h4 style="margin:18px 0 10px">Calendario de visitas</h4><div class="cli-card">' + vis +
+    '<button class="cli-btn" onclick="empNuevaVisita()">+ Añadir visita</button> <button class="cli-btn" onclick="empGuardarVisitas()">Guardar calendario</button></div>' +
+    '<h4 style="margin:18px 0 10px">Avances</h4><div class="cli-card"><textarea class="fi" id="av-texto" rows="3" placeholder="Describe el avance"></textarea>' +
+    '<input type="file" id="av-files" accept="image/*" multiple style="margin:10px 0;font-size:13px"><br><button class="cli-btn" id="av-btn" onclick="empSubirAvance()">Publicar avance</button></div>' + av;
+}
+
+async function empGuardar(campos) {
+  try {
+    empCli = await empApi('/clientes/' + empCli._id, 'PUT', campos);
+    showToast('✅ Guardado');
+    empRenderCli();
+  } catch (e) { showToast('❌ ' + e.message); }
+}
+
+function empGuardarCli() {
+  empGuardar({ nombre: empV('c-nombre'), tipo: empV('c-tipo'), servicio: empV('c-servicio'), plan: empV('c-plan') });
+}
+
+function empLeerDisp() {
+  return empCli.dispositivos.map((d, i) => {
+    const o = { _id: d._id, tipoEquipo: empV('d' + i + '-tipoEquipo'), estado: empV('d' + i + '-estado') };
+    EMP_CAMPOS.forEach(f => { o[f[0]] = empV('d' + i + '-' + f[0]); });
+    return o;
+  });
+}
+
+function empGuardarDisp() { empGuardar({ dispositivos: empLeerDisp() }); }
+function empNuevoDisp() { empGuardar({ dispositivos: empLeerDisp().concat([{ nombre: 'Nuevo equipo' }]) }); }
+function empQuitarDisp(i) { const l = empLeerDisp(); l.splice(i, 1); empGuardar({ dispositivos: l }); }
+
+function empLeerVisitas() {
+  return empCli.visitas.map((v, i) => ({ _id: v._id, fecha: empV('v' + i + '-fecha'), tipo: empV('v' + i + '-tipo'), estado: empV('v' + i + '-estado'), nota: empV('v' + i + '-nota') }));
+}
+
+function empGuardarVisitas() { empGuardar({ visitas: empLeerVisitas() }); }
+function empNuevaVisita() { empGuardar({ visitas: empLeerVisitas().concat([{ fecha: new Date().toISOString().slice(0, 10) }]) }); }
+function empQuitarVisita(i) { const l = empLeerVisitas(); l.splice(i, 1); empGuardar({ visitas: l }); }
+
+async function empSubirAvance() {
+  const texto = empV('av-texto').trim();
+  if (!texto) { showToast('⚠️ Escribe el texto del avance'); return; }
+  const btn = document.getElementById('av-btn');
+  btn.disabled = true; btn.textContent = 'Subiendo...';
+  try {
+    const imagenes = [];
+    for (const f of document.getElementById('av-files').files) imagenes.push(await empUpload(f));
+    await empApi('/clientes/' + empCli._id + '/avances', 'POST', { texto, imagenes });
+    showToast('✅ Avance publicado');
+    empAbrirCliente(empCli._id);
+  } catch (e) {
+    showToast('❌ ' + e.message);
+    btn.disabled = false; btn.textContent = 'Publicar avance';
+  }
+}
+
+async function empBorrarAvance(id) {
+  if (!confirm('¿Eliminar este avance?')) return;
+  try { await empApi('/clientes/' + empCli._id + '/avances/' + id, 'DELETE'); empAbrirCliente(empCli._id); } catch (e) { showToast('❌ ' + e.message); }
+}
+
+async function empBorrarCli() {
+  if (!confirm('¿Eliminar esta cuenta y todos sus datos?')) return;
+  try { await empApi('/clientes/' + empCli._id, 'DELETE'); showToast('✅ Cuenta eliminada'); empListarClientes(); } catch (e) { showToast('❌ ' + e.message); }
+}
+
+async function empListarTickets() {
+  const box = document.getElementById('emp-tickets');
+  box.innerHTML = '<p class="cli-empty">Cargando...</p>';
+  try {
+    const f = window.empFiltro || '';
+    const lista = await empApi('/tickets' + (f ? '?estado=' + f : ''));
+    box.innerHTML =
+      '<div class="emp-bar"><select class="fi" onchange="window.empFiltro=this.value;empListarTickets()">' + empOpts([['', 'Todos'], ['abierto', 'Abiertos'], ['en_espera', 'En espera'], ['cerrado', 'Cerrados']], f) + '</select></div>' +
+      (lista.length ? lista.map(t =>
+        '<div class="cli-card emp-item" onclick="empAbrirTicket(\'' + t._id + '\')"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><h4>#' + t.numero + ' · ' + esc(t.titulo) + '</h4>' + cliBadge(CLI_TICKET, t.estado) +
+        '</div><div style="font-size:13px;color:var(--text-mid)">' + esc(t.cliente ? t.cliente.nombre : (t.nombreContacto || 'Visitante')) + ' · ' + esc(t.motivo || '—') + ' · ' + cliFecha(t.createdAt) + ' · prioridad ' + esc(t.prioridad) + '</div></div>').join('')
+        : '<p class="cli-empty">No hay tickets.</p>');
+  } catch (e) { box.innerHTML = '<p class="cli-empty">' + esc(e.message) + '</p>'; }
+}
+
+async function empAbrirTicket(id) {
+  try {
+    empTicket = await empApi('/tickets/' + id);
+    const t = empTicket;
+    document.getElementById('emp-tickets').innerHTML =
+      '<button class="cli-btn" onclick="empListarTickets()">← Volver</button><div class="cli-card" style="margin-top:14px"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><h4>#' + t.numero + ' · ' + esc(t.titulo) + '</h4>' + cliBadge(CLI_TICKET, t.estado) +
+      '</div><div style="font-size:13px;color:var(--text-mid);margin-bottom:12px">' + esc(t.cliente ? t.cliente.nombre + ' · Doc ' + t.cliente.documento : (t.nombreContacto || 'Visitante') + ' ' + esc(t.contacto)) + '</div>' +
+      t.mensajes.map(m => '<div class="cli-msg ' + (m.autor === 'soporte' ? '' : 'cliente') + '"><small>' + (m.autor === 'cliente' ? 'Cliente' : m.autor === 'soporte' ? 'Soporte' : 'Asistente') + ' · ' + cliFecha(m.fecha) + '</small>' + esc(m.texto) + '</div>').join('') +
+      '<textarea class="fi" id="tk-texto" rows="3" placeholder="Responder..." style="margin-top:10px"></textarea>' +
+      '<div class="emp-bar" style="margin-top:10px"><button class="cli-btn" onclick="empResponder()">Enviar respuesta</button>' +
+      '<select class="fi" id="tk-estado">' + empOpts([['abierto', 'Abierto'], ['en_espera', 'En espera'], ['cerrado', 'Cerrado']], t.estado) + '</select>' +
+      '<select class="fi" id="tk-prio">' + empOpts([['alta', 'Prioridad alta'], ['media', 'Prioridad media'], ['baja', 'Prioridad baja']], t.prioridad) + '</select>' +
+      '<button class="cli-btn" onclick="empCambiarEstado()">Actualizar</button></div></div>';
+  } catch (e) { showToast('❌ ' + e.message); }
+}
+
+async function empResponder() {
+  const texto = empV('tk-texto').trim();
+  if (!texto) return;
+  try { await empApi('/tickets/' + empTicket._id + '/mensajes', 'POST', { texto }); empAbrirTicket(empTicket._id); } catch (e) { showToast('❌ ' + e.message); }
+}
+
+async function empCambiarEstado() {
+  try {
+    await empApi('/tickets/' + empTicket._id + '/estado', 'PATCH', { estado: empV('tk-estado'), prioridad: empV('tk-prio') });
+    showToast('✅ Ticket actualizado');
+    empAbrirTicket(empTicket._id);
+  } catch (e) { showToast('❌ ' + e.message); }
+}
 </script>
 </body>
 </html>
